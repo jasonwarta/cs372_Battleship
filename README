@@ -2,3 +2,8 @@
 
 This repository is for a battleship game, currently hotseat only but if 
 there is time, two player by web. 
+
+We developed the game using the following languages and frameworks:
+	Javascript
+	Meteor client/server framework
+	Gagarin testing framework
