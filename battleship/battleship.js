@@ -1,18 +1,15 @@
-if (Meteor.isClient) {
-  // counter starts at 0
-  Session.setDefault('counter', 0);
+PlayersList = new Mongo.Collection('players'); 
 
-  Template.hello.helpers({
-    counter: function () {
-      return Session.get('counter');
-    }
+if (Meteor.isClient) {
+  //Game will most likely be more on the client side (fast) 
+    //Then information will be updated through the server
+
+  Template.battleship.helpers({
+    
   });
 
-  Template.hello.events({
-    'click button': function () {
-      // increment the counter when button is clicked
-      Session.set('counter', Session.get('counter') + 1);
-    }
+  Template.battleship.events({
+    
   });
 }
 

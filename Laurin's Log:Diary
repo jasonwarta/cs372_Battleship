@@ -1,0 +1,12 @@
+//Laurin's Log/Diary
+
+2-12-16
+Started the Meteor tutorial, spent about 30 min - hour. Thought about design for the game. I like playing battleship with 2 grids, one for our ships, one for guessing the other player's. I also imagine the game having 2D sprites, those are easier to make. 
+
+2-13-16 & 2-14-16
+Went through Meteor tutorials (all 41 of them) and had a better idea of how coding is going to go. 
+
+2-15-16
+Looking up more information on Meteor. Made a players collection and started to make a signup process (a simple username is asked for). *Changed my mind, we can work on connecting and web server things later. We will lose less points as long as we get the game of battleship actually working. 
+
+2:19 PM - Had to delete old project, it wouldn't run with the cmd 'meteor run'. Made a new project and copied over the files. I changed the header and the button.
