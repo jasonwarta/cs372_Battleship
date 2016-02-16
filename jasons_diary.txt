@@ -1,0 +1,32 @@
+2016.02.08 Monday
+Groups were assigned.  Laurin and I decided explore the possibility of designing
+our project in Javascript.  We came up with three user stories and assigned them 
+difficulty levels.
+
+2016.02.09 Tuesday
+I spent 1.5 hours researching the possible frameworks we could use for our
+project, and settled on Meteor.  I then spent 2.5 hours working through a 
+Metoer tutorial.
+
+2016.02.10 Wednesday
+I spent 1 hour researching testing frameworks for Meteor
+
+2016.02.11 Thursday
+I spent 1.5 hours continuing research of testing frameworks for Meteor.  The best
+testing framework I found is Gagarin, because it is the most current of the several
+I located, and it seems to be the only testing framework still maintained by the 
+designers.
+
+2016.02.12 Friday
+
+
+2016.02.13 Saturday
+I went shopping, watched Deadpool, and played video games.
+
+2016.02.14 Sunday
+I spent 2.5 hours studying and working through a CSS tutorial in order to become
+familiar enough with the language to format a webpage.  Studying for Monday Calc test.
+
+2016.02.15 Monday
+I spent 3 hours reading about javascript and css, implemented a method to populate the 
+grid with elements for each cell, and included accounts management.

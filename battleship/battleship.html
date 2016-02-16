@@ -3,11 +3,32 @@
 </head>
 
 <body>
-  <h1>Welcome to Battleship!</h1>
+  {{> titlebar }}
 
-  {{> battleship}}
+  <!-- {{#if currentUser}} -->
+  <!-- put stuff to display if user is logged in in this block -->
+  	{{> game }}
+  <!-- {{/if}} -->
+
 </body>
 
-<template name="battleship">
-  <button>Click to start</button>
+
+<template name="titlebar" class="titlebar">
+	<ul id="nav" style="margin:0;">
+		<li>Battleship</li>
+		<li> {{> loginButtons align="left"}} </li>
+	</ul>
+</template>
+
+<template name="game" class="game">
+	<!-- the grid populated by initGrid method -->
+	<button class="resetGrid">Reset Grid</button>
+	<div class="gameboard">
+		<div class="gridContainer">
+			<h2>My ships</h2>
+		</div>
+		<div class="gridContainer">
+			<h2>Enemy ships</h2>
+		</div>
+	</div>
 </template>

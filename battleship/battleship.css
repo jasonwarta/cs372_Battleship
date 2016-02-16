@@ -1,1 +1,49 @@
 /* CSS declarations go here */
+body {
+	margin: 0;
+}
+
+.titlebar {
+	background-color: blue;
+	font-weight: bold;
+}
+
+#nav {
+	background-color: blue;
+	padding: 15px;
+}
+
+#nav li{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	display: inline;
+	color: white;
+	text-align: center;
+	padding: 15px 12px;
+	text-decoration: none;
+	border-right: 1px solid #bbb;
+}
+
+#nav li:last-child {
+	border-right: none;
+}
+
+.loginButton {
+	left: auto;
+	right: 100%;
+}
+
+.gameboard {
+	position: relative;
+}
+
+.gridContainer {
+	width: 430px;
+	display: inline-block;
+}
+
+.gridContainer h2 {
+	width: 430px;
+	display: inline-block;
+}
