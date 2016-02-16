@@ -5,11 +5,13 @@ if (Meteor.isClient) {
     //Then information will be updated through the server
 
   Template.battleship.helpers({
-    
   });
 
   Template.battleship.events({
-    
+    'click .battleship': function(){
+    	//the start button is clicked, start battleship
+    }
+
   });
 }
 
