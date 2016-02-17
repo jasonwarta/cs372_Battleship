@@ -62,7 +62,7 @@ body {
 	text-align: center;
 }
 
-div.cell{
+.cell{
 	width: 30px;
 	height: 30px;
 	background-color: skyblue;
@@ -70,43 +70,7 @@ div.cell{
 }
 
 
-[class*='cell-0'] {
-	float:left;
-}
-
-[class*='cell-1'] {
-	float:left;
-}
-
-[class*='cell-2'] {
-	float:left;
-}
-
-[class*='cell-3'] {
-	float:left;
-}
-
-[class*='cell-4'] {
-	float:left;
-}
-
-[class*='cell-5'] {
-	float:left;
-}
-
-[class*='cell-6'] {
-	float:left;
-}
-
-[class*='cell-7'] {
-	float:left;
-}
-
-[class*='cell-8'] {
-	float:left;
-}
-
-[class*='cell-9'] {
+.x0, .x1, .x2, .x3, .x4, .x5, .x6, .x7, .x8, .x9 {
 	float:left;
 }
 

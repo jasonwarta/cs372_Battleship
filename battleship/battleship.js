@@ -4,18 +4,34 @@ ShipsPlacement = new Mongo.Collection('ships');
 
 if (Meteor.isClient) {
   Template.game.onRendered( function(){
-    Meteor.call('initGrid');
+    Meteor.call('intiGridMeteor');
   });
 
   //Game will most likely be more on the client side (fast) 
     //Then information will be updated through the server
 
-  // Template.battleship.helpers({
-  // });
+  Template.game.helpers({
+    'cell': function(){
+      var currentUserId = Meteor.userId();
+      return BoardData.find({ ownedBy: currentUserId });
+    },
+    'cell_posX': function(){
+      var currentUserId = Meteor.userId();
+    },
+    'cell_posY': function(){
+      var currentUserId = Meteor.userId();
+    }
+  });
 
   Template.game.events({
-    'click .resetGrid': function (){
-      Meteor.call('initGrid');
+    'click .resetGrid': function() {
+      Meteor.call('intiGridMeteor');
+    },
+    'click .cell': function() {
+      var cellId = this._id;
+      var selectedCell = Session.set('selectedCell', cellId);
+
+      console.log("You clicked a cell");
     }
 
   });
@@ -31,33 +47,31 @@ Meteor.methods({
   //initGrid
   //takes no parameters
   //populates the gridContainers with elements for each cell
-  'initGrid': function(){
+  'intiGridMeteor': function(){
     // TODO:
     // link images for the blank grid, ships, hits, misses, and sunk ships to the elements
 
-    if(Meteor.isClient){
-      var gridElem = document.getElementsByClassName('gridContainer');
-      for(var grid = 0; grid < gridElem.length; grid++){
+    var currentUserId = Meteor.userId();
 
-        //delete all child elements in the grid container
-        while( gridElem[grid].hasChildNodes() ){
-          gridElem[grid].removeChild(gridElem[grid].lastChild);
-        }
+    if(currentUserId){
+      while(BoardData.findOne({ ownedBy: currentUserId })) {
+        BoardData.remove({ ownedBy: currentUserId })
+      }
 
-        //populate the grid container with cells
-        for(var i = 0; i < 10; i++){
-          for(var j = 0; j < 10; j++){
-            var elem = document.createElement('div');
-            elem.setAttribute('data-posX',i);
-            elem.setAttribute('data-posY',j);
-            elem.setAttribute('class', 'cell cell-' + i + '-' + j);
-            gridElem[grid].appendChild(elem);
-            //log creation of cells. this line should be commented out once images are added
-            // console.log("called initGrid, x=" + i + ", y=" + j + " : " + elem.getAttribute('class'));
-          }
+      for(var i = 0; i < 10; i++){
+        for(var j = 0; j < 10; j++){
+          BoardData.insert({
+            x: i,
+            y: j,
+            ownedBy: currentUserId,
+            state: "empty"
+          });
         }
       }
+    } else {
+      console.log("You aren't logged in!");
     }
+    
   }
 
 });

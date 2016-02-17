@@ -28,7 +28,17 @@
 			<h2 class="friendly">My ships</h2>
 			<h2 class="enemy">Enemy ships</h2>
 		</div>
-		<div class="gridContainer"></div>
-		<div class="gridContainer"></div>
+
+		<div class="gridContainer">
+			{{#each cell}}
+				<div class="cell x{{x}} y{{y}}"></div>
+			{{/each}}
+		</div>
+		<div class="gridContainer">
+			{{#each cell}}
+				<div class="cell x{{x}} y{{y}}"></div>
+			{{/each}}
+		</div>
+
 	</div>
 </template>
