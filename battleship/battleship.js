@@ -50,7 +50,6 @@ Meteor.methods({
   'intiGridMeteor': function(){
     // TODO:
     // link images for the blank grid, ships, hits, misses, and sunk ships to the elements
-
     var currentUserId = Meteor.userId();
 
     if(currentUserId){
@@ -68,8 +67,10 @@ Meteor.methods({
           });
         }
       }
+      return "success";
     } else {
       console.log("You aren't logged in!");
+      return "faliure";
     }
     
   }

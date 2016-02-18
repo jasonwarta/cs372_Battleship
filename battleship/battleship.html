@@ -23,21 +23,26 @@
 <template name="game" class="game">
 	<!-- the grid populated by initGrid method -->
 	<button class="resetGrid">Reset Grid</button>
-	<div class="gameboard">
-		<div class="labels">
-			<h2 class="friendly">My ships</h2>
-			<h2 class="enemy">Enemy ships</h2>
+
+	<div class="gameContainer">
+		<div class="board" id="leftBoard">
+			<h2 class="label" id="friendly">My ships</h2>
+			
+			<div class="gridContainer" id="friendly">
+				{{#each cell}}
+					<div class="cell x{{x}} y{{y}}"></div>
+				{{/each}}
+			</div>
 		</div>
 
-		<div class="gridContainer">
-			{{#each cell}}
-				<div class="cell x{{x}} y{{y}}"></div>
-			{{/each}}
-		</div>
-		<div class="gridContainer">
-			{{#each cell}}
-				<div class="cell x{{x}} y{{y}}"></div>
-			{{/each}}
+		<div class="board" id="rightBoard">
+			<h2 class="label" id="enemy">Enemy ships</h2>
+
+			<div class="gridContainer" id="enemy">
+				{{#each cell}}
+					<div class="cell x{{x}} y{{y}}"></div>
+				{{/each}}
+			</div>
 		</div>
 
 	</div>

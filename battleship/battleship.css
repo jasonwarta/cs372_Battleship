@@ -34,32 +34,32 @@ body {
 	right: 100%;
 }
 
-.gameboard {
+.gameContainer {
 	height: 100%;
-	width: 100%%;
+	width: 100%;
 	position: absolute;
 	display: block;
 	margin-right: auto;
 	margin-left: auto;
+	text-align: center;
+}
+
+.board {
+	width: 320px;
+	display: inline-block;
+	margin: 20px;
+}
+
+.board h2 {
+	width: 320px;
+	display: inline-block;
 }
 
 .gridContainer {
 	width: 320px;
 	display: inline-block;
-	float: left;
 	margin: 10px;
 	border: 3px solid darkblue;
-}
-
-.labels {
-	margin: auto;
-}
-
-.labels h2 {
-	float: left;
-	width: 320px;
-	display: inline-block;
-	text-align: center;
 }
 
 .cell{
@@ -68,7 +68,6 @@ body {
 	background-color: skyblue;
 	border: 1px solid darkblue;
 }
-
 
 .x0, .x1, .x2, .x3, .x4, .x5, .x6, .x7, .x8, .x9 {
 	float:left;
