@@ -21,3 +21,7 @@ insecure                # Allow all DB writes from clients (for prototyping)
 accounts-ui
 accounts-password
 anti:gagarin@=0.4.12
+xolvio:cucumber
+velocity:console-reporter
+sanjo:jasmine
+velocity:html-reporter
