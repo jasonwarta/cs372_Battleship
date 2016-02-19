@@ -78,6 +78,10 @@ Meteor.methods({
       return "faliure";
     }
     
+  },
+
+  'addThree': function(num){
+    return num + 3; 
   }
 
 });
