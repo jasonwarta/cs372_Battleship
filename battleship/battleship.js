@@ -7,6 +7,11 @@ if (Meteor.isClient) {
     Meteor.call('intiGridMeteor');
   });
 
+//Testing the Testing Framework :) ->Works!
+AddTwo = function AddTwo(num){
+  return num +2; 
+}
+
   //Game will most likely be more on the client side (fast) 
     //Then information will be updated through the server
 

@@ -10,3 +10,6 @@ Went through Meteor tutorials (all 41 of them) and had a better idea of how codi
 Looking up more information on Meteor. Made a players collection and started to make a signup process (a simple username is asked for). *Changed my mind, we can work on connecting and web server things later. We will lose less points as long as we get the game of battleship actually working. 
 
 2:19 PM - Had to delete old project, it wouldn't run with the cmd 'meteor run'. Made a new project and copied over the files. I changed the header and the button.
+
+2-19-16
+Pushed new testing framework to git (Jasmine&Velocity). It looks much easier to use and implement than what I’ve seen so far. The tutorials actually work too.
