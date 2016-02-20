@@ -2,6 +2,8 @@ PlayersList = new Mongo.Collection('players');
 BoardData = new Mongo.Collection('board');
 PlayerAction = new Mongo.Collection('actions');
 
+
+
 if (Meteor.isClient) {
   Template.game.onRendered( function(){
     Meteor.call('initGrid');

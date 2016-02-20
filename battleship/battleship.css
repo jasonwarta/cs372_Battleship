@@ -35,19 +35,81 @@ body {
 }
 
 .gameContainer {
-	height: 100%;
-	width: 100%;
-	position: absolute;
-	display: block;
+	position: relative;
 	margin-right: auto;
 	margin-left: auto;
 	text-align: center;
+	height: 100%;
+	width: 100%;
+}
+
+.shipSelectContainer {
+	width: 150px;
+	height: 225px;
+	display: inline-block;
+	border: 3px solid darkblue;
+	vertical-align: calc(50% + 120px);
+	position: relative;
+}
+
+.shipSelectContainer ul {
+	padding: 0;
+	padding-bottom: 14px;
+}
+
+.shipSelectContainer h4 {
+	text-align: center;
+}
+
+.shipSelectContainer button {
+	margin: 7px;
+}
+
+.shipSelectContainer li {
+	text-align: center;
+	list-style: none;
+	margin: 5px;
+	cursor: pointer;
+}
+
+.sunkShips {
+	width: 150px;
+	height: 225px;
+	display: inline-block;
+	border: 3px solid darkblue;
+	vertical-align: calc(50% + 155px);
+	position: relative;	
+	margin-left: 20px;
+}
+
+.sunkShips ul {
+	padding: 0;
+	list-style: none;
+	padding-bottom: 14px;
+}
+
+.sunkShips li {
+	text-align: center;
+	list-style: none;
+	margin: 5px;
+}
+
+.sunkShip {
+	visibility: hidden;
 }
 
 .board {
 	width: 320px;
 	display: inline-block;
 	margin: 20px;
+}
+
+#leftBoard {
+	display: inline-block;
+}
+
+#rightBoard {
+	display: inline-block;
 }
 
 .board h2 {
@@ -58,9 +120,14 @@ body {
 
 .gridContainer {
 	width: 320px;
+	height: 320px;
 	display: inline-block;
 	margin: 10px;
 	border: 3px solid darkblue;
+}
+
+.cell {
+	cursor: pointer;
 }
 
 .cell.empty{
@@ -81,5 +148,7 @@ body {
 	float:left;
 }
 
-
+.showSunkShip {
+	visibility: default;
+}
 
