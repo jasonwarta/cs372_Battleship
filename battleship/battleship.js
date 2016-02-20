@@ -1,16 +1,17 @@
 PlayersList = new Mongo.Collection('players'); 
 BoardData = new Mongo.Collection('board');
-ShipsPlacement = new Mongo.Collection('ships');
+PlayerAction = new Mongo.Collection('actions');
 
 if (Meteor.isClient) {
   Template.game.onRendered( function(){
-    Meteor.call('intiGridMeteor');
+    Meteor.call('initGrid');
   });
 
 //Testing the Testing Framework :) ->Works!
-AddTwo = function AddTwo(num){
-  return num +2; 
-}
+// AddTwo = function AddTwo(num){
+//   return num +2;
+// }
+
 
   //Game will most likely be more on the client side (fast) 
     //Then information will be updated through the server
@@ -30,7 +31,7 @@ AddTwo = function AddTwo(num){
 
   Template.game.events({
     'click .resetGrid': function() {
-      Meteor.call('intiGridMeteor');
+      Meteor.call('intiGrid');
     },
     'click .cell': function() {
       var cellId = this._id;
@@ -52,12 +53,12 @@ Meteor.methods({
   //initGrid
   //takes no parameters
   //populates the gridContainers with elements for each cell
-  'intiGridMeteor': function(){
+  'initGrid': function(){
     // TODO:
     // link images for the blank grid, ships, hits, misses, and sunk ships to the elements
     var currentUserId = Meteor.userId();
 
-    if(currentUserId){
+    // if(currentUserId){
       while(BoardData.findOne({ ownedBy: currentUserId })) {
         BoardData.remove({ ownedBy: currentUserId })
       }
@@ -72,11 +73,16 @@ Meteor.methods({
           });
         }
       }
+      // return "success";
+    // } else {
+    //   console.log("You aren't logged in!");
+    //   return "faliure";
+    // }
+    // if(BoardData.find({ ownedBy: {$eq: currentUserId }}).count() == 200) {
       return "success";
-    } else {
-      console.log("You aren't logged in!");
-      return "faliure";
-    }
+    // } else {
+    //   return "failure";
+    // }
     
   },
 
