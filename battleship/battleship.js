@@ -3,10 +3,14 @@ BoardData = new Mongo.Collection('board');
 PlayerAction = new Mongo.Collection('actions');
 
 
-
 if (Meteor.isClient) {
   Template.game.onRendered( function(){
     Meteor.call('initGrid');
+
+    //session var to track state of rotation
+    //changed by clicking 'rotate' button
+    //starts at "down"
+    Session.set('rotation',"down");
   });
 
 //Testing the Testing Framework :) ->Works!
@@ -22,12 +26,6 @@ if (Meteor.isClient) {
     'cell': function(){
       var currentUserId = Meteor.userId();
       return BoardData.find({ ownedBy: currentUserId });
-    },
-    'cell_posX': function(){
-      var currentUserId = Meteor.userId();
-    },
-    'cell_posY': function(){
-      var currentUserId = Meteor.userId();
     }
   });
 
@@ -40,6 +38,9 @@ if (Meteor.isClient) {
       var selectedCell = Session.set('selectedCell', cellId);
 
       console.log("You clicked a cell");
+    },
+    'click .rotate': function(){
+
     }
 
   });
@@ -60,36 +61,48 @@ Meteor.methods({
     // link images for the blank grid, ships, hits, misses, and sunk ships to the elements
     var currentUserId = Meteor.userId();
 
-    // if(currentUserId){
-      while(BoardData.findOne({ ownedBy: currentUserId })) {
-        BoardData.remove({ ownedBy: currentUserId })
-      }
+    while(BoardData.findOne({ ownedBy: currentUserId })) {
+      BoardData.remove({ ownedBy: currentUserId })
+    }
 
-      for(var i = 0; i < 10; i++){
-        for(var j = 0; j < 10; j++){
-          BoardData.insert({
-            x: i,
-            y: j,
-            ownedBy: currentUserId,
-            state: "empty"
-          });
-        }
+    for(var i = 0; i < 10; i++){
+      for(var j = 0; j < 10; j++){
+        BoardData.insert({
+          x: i,
+          y: j,
+          ownedBy: currentUserId,
+          state: "empty"
+        });
       }
-      // return "success";
-    // } else {
-    //   console.log("You aren't logged in!");
-    //   return "faliure";
-    // }
-    // if(BoardData.find({ ownedBy: {$eq: currentUserId }}).count() == 200) {
-      return "success";
-    // } else {
-    //   return "failure";
-    // }
-    
+    }
+    return "finished init";
   },
 
-  'addThree': function(num){
-    return num + 3; 
+  //posX is the X position of the cell
+  //posY is the Y position of the cell
+  //rotation is in directions "up","left","down","right" from the clicked location
+  'placeShip': function(posX, posY, rotation){
+    // var currentUserId = Meteor.userId();
+
+
+
+  },
+  //posX is the X position of the cell
+  //posY is the Y position of the cell
+  //rotation is in directions "up","left","down","right" from the clicked location
+  'checkShipPosition': function(posX,posY,rotation,shipLength){
+    if(rotation == "up"){
+
+    } else if (rotation == "left"){
+
+    } else if (rotation == "down"){
+
+    } else if (rotation == "right"){
+
+    } else {
+      return "invalid position";
+    }
   }
+
 
 });

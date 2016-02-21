@@ -1,24 +1,34 @@
-describe('Testing Meteor Methods', function(){
-  // it('Testing addThree, added method', function(){
-  //   Meteor.call('addThree',4), function(error, result){
-  //     if (error){
-  //       console.log(error.reason); 
-  //       return; 
-  //     }
-  //       expect(Meteor.call('addThree',4)).toEqual(7); 
-  //   }
-  // }); 
+describe('Setting Up Grid: ', function(){
+  
 
-  it('Testing Grid initialization', function(){
-
-
+  it("Initialize Grid", function(){
     var result = Meteor.call('initGrid');
-    expect(result).toEqual("success");
-
-    
+    expect(result).toEqual("finished init");
   });
 
-  // it('Testing adding three method', function() {
-  //   expect(Meteor.call('addThree',4)).toEqual(7);
-  // });
 }); 
+
+
+describe('Placing Ships:', function(){
+
+  it("Place ship: 0,0,up,carrier", function(){
+    var result = Meteor.call('checkShipPosition',0,0,5,"up");
+    expect(result).toEqual("valid position");
+  });
+
+  it("Place ship: 0,0,left,carrier", function(){
+    var result = Meteor.call('checkShipPosition');
+    expect(result).toEqual("valid position");
+  });
+
+  it("Place ship: 9,0,down,carrier", function(){
+    var result = Meteor.call('checkShipPosition');
+    expect(result).toEqual("valid position");
+  });
+
+  it("Place ship: 0,9,right,carrier", function(){
+    var result = Meteor.call('checkShipPosition');
+    expect(result).toEqual("valid position");
+  });
+
+});
