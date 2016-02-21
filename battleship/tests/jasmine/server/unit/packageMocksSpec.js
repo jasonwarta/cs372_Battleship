@@ -268,7 +268,7 @@ var packageMetadata = {
             },
             "fibersCreated": {
               "type": "constant",
-              "value": 8
+              "value": 14
             },
             "prototype": {
               "type": "object",
@@ -7777,7 +7777,7 @@ var packageMetadata = {
                 },
                 "version": {
                   "type": "constant",
-                  "value": "f827adeaaf535599800974296d1136349ebd048b"
+                  "value": "88e1dffd1d2484b0b2cffeb7ceed62da1010fdba"
                 },
                 "PUBLIC_SETTINGS": {
                   "type": "object"
@@ -7901,7 +7901,7 @@ var packageMetadata = {
             },
             "connections": {
               "type": "constant",
-              "value": 0
+              "value": 1
             },
             "timeout": {
               "type": "constant",
@@ -10671,7 +10671,7 @@ var packageMetadata = {
                 },
                 "pid": {
                   "type": "constant",
-                  "value": 48368
+                  "value": 49193
                 },
                 "getTaskName": {
                   "type": "function"
@@ -10755,11 +10755,11 @@ var packageMetadata = {
       "members": {
         "autoupdateVersion": {
           "type": "constant",
-          "value": "e3f672d8d90363b89c4a46cd0e418ad976d01cc9"
+          "value": "fa2b2edb9310e6a69c97e631e1b10e08cbfcfc4c"
         },
         "autoupdateVersionRefreshable": {
           "type": "constant",
-          "value": "a273f080e925f09f8b084eb0f9ecc6dd02ea3b7b"
+          "value": "a4ea73c1e84991319c5e6602de2a81450c09ce88"
         },
         "autoupdateVersionCordova": {
           "type": "constant",

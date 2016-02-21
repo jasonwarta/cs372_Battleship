@@ -3,10 +3,9 @@ BoardData = new Mongo.Collection('board');
 PlayerAction = new Mongo.Collection('actions');
 CellArray = new Mongo.Collection('cells');
 
-
 if (Meteor.isClient) {
   Template.game.onRendered( function(){
-    Meteor.call('initGrid');
+    Meteor.call('initCellArray');
 
     //session var to track state of rotation
     //changed by clicking 'rotate' button
@@ -25,14 +24,13 @@ if (Meteor.isClient) {
 
   Template.game.helpers({
     'cell': function(){
-      var currentUserId = Meteor.userId();
-      return BoardData.find({ ownedBy: currentUserId });
+      return CellArray.find();
     }
   });
 
   Template.game.events({
     'click .resetGrid': function() {
-      Meteor.call('intiGrid');
+      Meteor.call('initCellArray');
     },
     'click .cell': function() {
       var cellId = this._id;
@@ -42,6 +40,12 @@ if (Meteor.isClient) {
     },
     'click .rotate': function(){
 
+    },
+    'mouseenter .cell': function() {
+      return "enterCell";
+    },
+    'mouseleave .cell': function() {
+
     }
 
   });
@@ -49,7 +53,7 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
-    
+
   });
 }
 
@@ -88,6 +92,8 @@ Meteor.methods({
 
 
   },
+
+  
   //posX is the X position of the cell
   //posY is the Y position of the cell
   //rotation is in directions "up","left","down","right" from the clicked location
@@ -124,18 +130,18 @@ Meteor.methods({
     }
   },
 
-  'checkGridInit': function(){
+  'initCellArray': function(){
+    CellArray.remove({});
 
     for(var i = 0; i < 10; i++){
       for(var j = 0; j < 10; j++){
-        if(CellArray.findOne({x: i,y: j})){
-          continue;
-        } else {
-          return "corrupt";
-        }
+        CellArray.insert({
+          x: i,
+          y: j,
+          state: "empty"
+        });
       }
     }
-    return "good";
   }
 
 
