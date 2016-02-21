@@ -40,12 +40,6 @@ if (Meteor.isClient) {
     },
     'click .rotate': function(){
 
-    },
-    'mouseenter .cell': function() {
-      return "enterCell";
-    },
-    'mouseleave .cell': function() {
-
     }
 
   });
@@ -93,7 +87,7 @@ Meteor.methods({
 
   },
 
-  
+
   //posX is the X position of the cell
   //posY is the Y position of the cell
   //rotation is in directions "up","left","down","right" from the clicked location
