@@ -67,8 +67,9 @@ if (Meteor.isClient) {
     },
 
     //ship placement handlers
-    'click .shipSelector': function(){
-
+    'click .shipSelector': function(e){
+      var itemId = $(e.currentTarget).attr("id");
+      console.log(itemId);
     },
 
     //rotate button handler
