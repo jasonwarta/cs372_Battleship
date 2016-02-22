@@ -2,7 +2,7 @@
   <title>battleship</title>
 </head>
 
-<body>
+<body class="body">
   {{> titlebar }}
 
   {{#if currentUser}}
@@ -29,7 +29,7 @@
 		<div class="shipSelectContainer">
 			<ul class="shipList">
 				<li><h4 class="label">Select Ship</h4></li>
-				<li><button id="rotate">Rotate</button></li>
+				<li><button class="rotate">Rotation: {{rotation}}</button></li>
 				<li class="shipSelector" id="carrier">Aircraft Carrier</li>
 				<li class="shipSelector" id="battleship">Battleship</li>
 				<li class="shipSelector" id="cruiser">Cruiser</li>

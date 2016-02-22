@@ -4,14 +4,21 @@ PlayerAction = new Mongo.Collection('actions');
 CellArray = new Mongo.Collection('cells');
 
 if (Meteor.isClient) {
+
+
+
   Template.game.onRendered( function(){
     Meteor.call('initCellArray');
+
+    var elems = document.getElementsByClassName('rotate');
+    elems[0].focus();
 
     //session var to track state of rotation
     //changed by clicking 'rotate' button
     //starts at "down"
     Session.set('rotation',"down");
-    Session.set('gameMode','init'); // 'placing','shooting','done'
+    Session.set('gameMode','init'); // 'init','placing','shooting','done'
+
   });
 
 
@@ -37,9 +44,13 @@ if (Meteor.isClient) {
 
       } else if(Session.get('gameMode') == 'shooting'){
 
-      } 
-      
-    }
+      }  
+    },
+    'rotation': function(){
+      return Session.get('rotation');
+    },
+
+
   });
 
   Template.game.events({
@@ -71,6 +82,19 @@ if (Meteor.isClient) {
       else if(state == "right") Session.set('rotation','down');
       else Session.set('rotation','down');
     },
+    'keyup': function(event) {
+      if(event.which == 82){
+        var state = Session.get('rotation');
+      
+        if(state == "down") Session.set('rotation','left');
+        else if(state == "left") Session.set('rotation','up');
+        else if(state == "up") Session.set('rotation','right');
+        else if(state == "right") Session.set('rotation','down');
+        else Session.set('rotation','down');
+      }
+    },
+
+
 
     //mouseover handlers for friendly cells
     'mouseenter .friendly': function() {

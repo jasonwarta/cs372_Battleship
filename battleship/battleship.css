@@ -62,6 +62,9 @@ body {
 
 .shipSelectContainer button {
 	margin: 7px;
+	width: 120px;
+	font-weight: bold;
+	outline: 0;
 }
 
 .shipSelectContainer li {
