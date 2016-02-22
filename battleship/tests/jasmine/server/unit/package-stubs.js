@@ -267,7 +267,7 @@ var packageMetadata = {
             },
             "fibersCreated": {
               "type": "constant",
-              "value": 8
+              "value": 10
             },
             "prototype": {
               "type": "object",
@@ -7776,7 +7776,7 @@ var packageMetadata = {
                 },
                 "version": {
                   "type": "constant",
-                  "value": "f6237352b8c2b71fcf1cb6a3d60e71c125b60bd3"
+                  "value": "8839a73448f055078f01a245bbb49d20acb03589"
                 },
                 "PUBLIC_SETTINGS": {
                   "type": "object"
@@ -7900,7 +7900,7 @@ var packageMetadata = {
             },
             "connections": {
               "type": "constant",
-              "value": 0
+              "value": 1
             },
             "timeout": {
               "type": "constant",
@@ -10754,11 +10754,11 @@ var packageMetadata = {
       "members": {
         "autoupdateVersion": {
           "type": "constant",
-          "value": "c365f99a4019c0d481341aa05bcf12ed6313daed"
+          "value": "d8b14144f76b697c50bc19abab7105cc2276a8b4"
         },
         "autoupdateVersionRefreshable": {
           "type": "constant",
-          "value": "5be60c0a7bdb80971032a3b6d24a0c13ffcffcf7"
+          "value": "87280f3cace256e0934e7461bfd6020c5edce13d"
         },
         "autoupdateVersionCordova": {
           "type": "constant",

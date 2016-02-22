@@ -25,6 +25,11 @@ if (Meteor.isClient) {
   Template.game.helpers({
     'cell': function(){
       return CellArray.find();
+    },
+    'mouseover': function(){
+      var cellId = this._id;
+      var hoverCell = Session.get('hoverCell');
+      if(cellId == hoverCell) return 'mouseHover';
     }
   });
 
@@ -46,8 +51,13 @@ if (Meteor.isClient) {
       else if(state == "left") Session.set('rotation','up');
       else if(state == "up") Session.set('rotation','right');
       else if(state == "right") Session.set('rotation','down');
+      else Session.set('rotation','down');
     },
-    
+    'mouseenter .cell': function() {
+      var cellId = this._id;
+      Session.set('hoverCell',cellId);
+    }
+
 
   });
 }
