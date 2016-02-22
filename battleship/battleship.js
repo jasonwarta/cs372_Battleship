@@ -39,8 +39,15 @@ if (Meteor.isClient) {
       console.log("You clicked a cell");
     },
     'click .rotate': function(){
+      //rotation happens clockwise, starting at down
+      var state = Session.get('rotation');
 
-    }
+      if(state == "down") Session.set('rotation','left');
+      else if(state == "left") Session.set('rotation','up');
+      else if(state == "up") Session.set('rotation','right');
+      else if(state == "right") Session.set('rotation','down');
+    },
+    
 
   });
 }

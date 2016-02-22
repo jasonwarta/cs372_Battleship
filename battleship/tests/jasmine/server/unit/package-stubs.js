@@ -267,7 +267,7 @@ var packageMetadata = {
             },
             "fibersCreated": {
               "type": "constant",
-              "value": 13
+              "value": 8
             },
             "prototype": {
               "type": "object",
@@ -7776,7 +7776,7 @@ var packageMetadata = {
                 },
                 "version": {
                   "type": "constant",
-                  "value": "40d626f302ba9e1c0d556dba3509330315e7ae08"
+                  "value": "f6237352b8c2b71fcf1cb6a3d60e71c125b60bd3"
                 },
                 "PUBLIC_SETTINGS": {
                   "type": "object"
@@ -7900,7 +7900,7 @@ var packageMetadata = {
             },
             "connections": {
               "type": "constant",
-              "value": 3
+              "value": 0
             },
             "timeout": {
               "type": "constant",
@@ -10754,7 +10754,7 @@ var packageMetadata = {
       "members": {
         "autoupdateVersion": {
           "type": "constant",
-          "value": "88478735efb0b3f2ea2a5ea96aec1f495514e1aa"
+          "value": "c365f99a4019c0d481341aa05bcf12ed6313daed"
         },
         "autoupdateVersionRefreshable": {
           "type": "constant",
