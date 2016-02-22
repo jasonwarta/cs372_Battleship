@@ -149,6 +149,10 @@ body {
 	visibility: hidden;
 }
 
-.mouseHover {
+.mouseenter {
 	background-color: lightblue;
+}
+
+.mouseleave {
+	background-color: skyblue;
 }

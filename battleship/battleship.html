@@ -41,9 +41,9 @@
 		<!-- player board -->
 		<div class="board" id="leftBoard">
 			<h2 class="label" id="friendly">My ships</h2>
-			<div class="gridContainer" id="friendly">
+			<div class="gridContainer">
 				{{#each cell}}
-					<div class="cell {{mouseover}} x{{x}} y{{y}} {{state}}"></div>
+					<div class="cell friendly {{mouseover}} x{{x}} y{{y}} {{state}}"></div>
 				{{/each}}
 			</div>
 		</div>
@@ -51,9 +51,9 @@
 		<!-- enemy board -->
 		<div class="board" id="rightBoard">
 			<h2 class="label" id="enemy">Enemy ships</h2>
-			<div class="gridContainer" id="enemy">
+			<div class="gridContainer">
 				{{#each cell}}
-					<div class="cell x{{x}} y{{y}} {{state}}"></div>
+					<div class="cell enemy x{{x}} y{{y}} {{state}}"></div>
 				{{/each}}
 			</div>
 		</div>

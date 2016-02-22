@@ -11,12 +11,8 @@ if (Meteor.isClient) {
     //changed by clicking 'rotate' button
     //starts at "down"
     Session.set('rotation',"down");
+    Session.set('gameMode','init'); // 'placing','shooting','done'
   });
-
-//Testing the Testing Framework :) ->Works!
-// AddTwo = function AddTwo(num){
-//   return num +2;
-// }
 
 
   //Game will most likely be more on the client side (fast) 
@@ -28,8 +24,21 @@ if (Meteor.isClient) {
     },
     'mouseover': function(){
       var cellId = this._id;
-      var hoverCell = Session.get('hoverCell');
-      if(cellId == hoverCell) return 'mouseHover';
+      var hoverCell = Session.get('enterCell');
+      if(Session.get('gameMode') == 'init'){
+        if(cellId == hoverCell) {
+          if(Session.get('mouseState') == 'enter'){
+            return 'mouseenter';
+          } else {
+            return 'mouseleave';
+          }
+        }
+      } else if(Session.get('gameMode') == 'placing'){
+
+      } else if(Session.get('gameMode') == 'shooting'){
+
+      } 
+      
     }
   });
 
@@ -39,10 +48,19 @@ if (Meteor.isClient) {
     },
     'click .cell': function() {
       var cellId = this._id;
+
+
       var selectedCell = Session.set('selectedCell', cellId);
 
       console.log("You clicked a cell");
     },
+
+    //ship placement handlers
+    'click .shipSelector': function(){
+
+    },
+
+    //rotate button handler
     'click .rotate': function(){
       //rotation happens clockwise, starting at down
       var state = Session.get('rotation');
@@ -53,10 +71,18 @@ if (Meteor.isClient) {
       else if(state == "right") Session.set('rotation','down');
       else Session.set('rotation','down');
     },
-    'mouseenter .cell': function() {
+
+    //mouseover handlers for friendly cells
+    'mouseenter .friendly': function() {
       var cellId = this._id;
-      Session.set('hoverCell',cellId);
-    }
+      Session.set('mouseState','enter');
+      Session.set('enterCell',cellId);
+    },
+    'mouseleave .friendly': function() {
+      var cellId = this._id;
+      Session.set('mouseState','leave');
+      Session.set('leaveCell',cellId);
+    },
 
 
   });
@@ -110,7 +136,7 @@ Meteor.methods({
   //rotation is in directions "up","left","down","right" from the clicked location
   //ship is a string: "carrier","battleship","cruiser","submarine","destroyer"
   'checkShipPosition': function(posX,posY,rotation,ship){
-    var ships = {"carrier":5,"battleship":4,"cruiser":3,"submarine":3,"sub":3,"destroyer":2};
+    var ships = {"carrier":5,"battleship":4,"cruiser":3,"submarine":3,"sub":3,"destroyer":2,5:5,4:4,3:3,2:2};
 
     if(rotation == "up"){
       if(posY - ships.ship < 0){
