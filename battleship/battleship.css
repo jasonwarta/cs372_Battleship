@@ -159,3 +159,7 @@ body {
 .mouseleave {
 	background-color: skyblue;
 }
+
+#carrierImage{
+	position:absolute;
+}

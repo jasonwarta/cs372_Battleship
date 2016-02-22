@@ -268,7 +268,7 @@ var packageMetadata = {
             },
             "fibersCreated": {
               "type": "constant",
-              "value": 10
+              "value": 9
             },
             "prototype": {
               "type": "object",
@@ -7777,7 +7777,7 @@ var packageMetadata = {
                 },
                 "version": {
                   "type": "constant",
-                  "value": "e2afeb708c89388ad9c7c6b75cdc45c6d12997a4"
+                  "value": "21feb1b99a7ef72e951a43d58871584e193590c6"
                 },
                 "PUBLIC_SETTINGS": {
                   "type": "object"
@@ -10667,11 +10667,11 @@ var packageMetadata = {
                 },
                 "appPath": {
                   "type": "constant",
-                  "value": "/Users/jasonwarta/Desktop/Computer_Science/cs372/cs372_battleship/battleship"
+                  "value": "/Users/laurin/Documents/School/Software Construction/battleship/cs372_battleship/battleship"
                 },
                 "pid": {
                   "type": "constant",
-                  "value": 54688
+                  "value": 27836
                 },
                 "getTaskName": {
                   "type": "function"
@@ -10755,11 +10755,11 @@ var packageMetadata = {
       "members": {
         "autoupdateVersion": {
           "type": "constant",
-          "value": "53807eb7a54934286dee20207fd83354caf2caad"
+          "value": "e3d23e11925c66dbb1837ec0499c1d78dbf014fa"
         },
         "autoupdateVersionRefreshable": {
           "type": "constant",
-          "value": "fe7acd6a9ca0be01667c7a66286a07437a544c47"
+          "value": "b107083a465913cd67e56f3be3cc9464764300bc"
         },
         "autoupdateVersionCordova": {
           "type": "constant",

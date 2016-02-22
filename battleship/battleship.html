@@ -4,12 +4,9 @@
 
 <body class="body">
   {{> titlebar }}
-
   {{#if currentUser}}
-  <!-- put stuff to display if user is logged in in this block -->
   	{{> game }}
   {{/if}}
-
 </body>
 
 
@@ -21,11 +18,7 @@
 </template>
 
 <template name="game" class="game">
-	<!-- the grid populated by initGrid method -->
-	
-
 	<div class="gameContainer">
-
 		<div class="shipSelectContainer">
 			<ul class="shipList">
 				<li><h4 class="label">Select Ship</h4></li>
@@ -72,6 +65,8 @@
 	</div>
 
 	<button class="resetGrid">Reset Grid</button>
+
+	<img id="carrierImage" src="aircraftCarrierImage.jpg"/> 
 
 </template>
 
