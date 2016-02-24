@@ -17,3 +17,7 @@ Pushed new testing framework to git (Jasmine&Velocity). It looks much easier to 
 2-22-16
 Finally contributed something today. Jason taught me more about how Meteor, Javascript, HTML, and CSS all work together and I think I've finally got a foothold. Made it so a ship is clicked and the ship picture follows the mouse around the browser for user interface convenience. 
 
+2-24-16
+Got the sprite sheet to work with css. Now when the ships
+are selected the appropriate image (and image size) follows the 
+mouse, but is not in the way of the mouse.

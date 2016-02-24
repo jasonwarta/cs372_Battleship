@@ -12,7 +12,7 @@
 describe('Client Side Battleship Tests', function(){
 	describe('Game Helper Functions', function(){
 		it('', function(){
-			
+
 		}); 
 	}); 
 	

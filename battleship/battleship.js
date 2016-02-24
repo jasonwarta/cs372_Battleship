@@ -5,8 +5,8 @@ CellArray = new Mongo.Collection('cells');
 
 //Meteor Client Code
 if (Meteor.isClient) {
-
   Template.game.onRendered( function(){
+    
     Meteor.call('initCellArray');
     var elems = document.getElementsByClassName('rotate');
     elems[0].focus();
@@ -19,6 +19,15 @@ if (Meteor.isClient) {
   });
 
   Template.game.helpers({
+    //for hiding the ship images, a boolean for html
+    'placing': function(){
+      if(Session.get('gameMode') == 'placing'){
+        return true; 
+      }
+      else{
+        return false; 
+      }
+    },
     'cell': function(){
       return CellArray.find();
     },
@@ -101,14 +110,22 @@ if (Meteor.isClient) {
     //To have ships follow the mouse when it is selected
     'mousemove': function(e){
       //When placing ships, have image follow mouse movement
-      console.log(Session.get('gameMode')); 
+
       if(Session.get('gameMode') == 'placing'){
          var ship = Session.get('selectedShip')
-         $("#" + ship + "Image").css({left:e.pageX, top:e.pageY}); 
-      }
-      else{
+         var ships = ["carrier", "destroyer", "cruiser", "sub", 
+         "submarine", "battleship"]; 
 
-      }
+        //delete former classes if user has clicked on any 
+          //(ex: switched carrier to sub)
+        for(var i=0; i<6; ++i){
+          $('#shipPack').removeClass(ships[i]); 
+        }
+        //follows mouse, but gives space for mouse to click
+        $('#shipPack').css({left: e.pageX + 3, top: e.pageY + 3}); 
+        //add the appropriate sprite class for width,height,etc
+        $('#shipPack').addClass(ship);
+       }
     }
   });
 }
