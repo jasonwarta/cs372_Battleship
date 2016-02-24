@@ -14,7 +14,7 @@ if (Meteor.isClient) {
     //changed by clicking 'rotate' button
     //starts at "down"
     Session.set('rotation',"down");
-    Session.set('gameMode','init'); // 'init','placing','shooting','done'
+    Session.set('gameMode','init'); // 'init','placing','waiting','shooting','done'
     Session.set('selectedShip', 'none'); //'carrier', etc
   });
 
@@ -61,6 +61,14 @@ if (Meteor.isClient) {
     'click .cell': function() {
       var cellId = this._id;
       var selectedCell = Session.set('selectedCell', cellId);
+
+      if(Session.get('gameMode') == 'placing'){
+        $('#shipPack').css({left:  3, top:  3}); 
+        //$('.' + Session.get('selectedShip')).css({left:  3, top:  3})
+        // Session.set('gameMode', 'waiting'); 
+        // $('#shipPack').css({left:  3, top:  3}); 
+        // $('#shipPack').addClass(Session.get('selectedShip'));
+      }
     },
 
     //ship placement handlers
@@ -109,16 +117,14 @@ if (Meteor.isClient) {
 
     //To have ships follow the mouse when it is selected
     'mousemove': function(e){
-      //When placing ships, have image follow mouse movement
-
       if(Session.get('gameMode') == 'placing'){
          var ship = Session.get('selectedShip')
-         var ships = ["carrier", "destroyer", "cruiser", "sub", 
+         var ships = ["carrier", "destroyer", "cruiser", 
          "submarine", "battleship"]; 
 
         //delete former classes if user has clicked on any 
           //(ex: switched carrier to sub)
-        for(var i=0; i<6; ++i){
+        for(var i=0; i<5; ++i){
           $('#shipPack').removeClass(ships[i]); 
         }
         //follows mouse, but gives space for mouse to click

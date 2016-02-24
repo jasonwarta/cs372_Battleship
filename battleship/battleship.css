@@ -188,12 +188,6 @@ http://www.spritecow.com*/
 	height: 25px;
 }
 
-.sub{
-	background: url('Battleship_Pack.PNG') no-repeat -124px -267px; 
-	width: 98px;
-	height: 23px;
-}
-
 .battleship{
 	background: url('Battleship_Pack.PNG') no-repeat -124px -328px; 
 	width: 139px;
