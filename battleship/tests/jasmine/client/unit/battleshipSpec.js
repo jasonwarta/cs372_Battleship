@@ -7,3 +7,14 @@
 //      expect(AddTwo(2)).toEqual(4); 
 //   }); 
 // }); 
+
+//Client Side Testing
+describe('Client Side Battleship Tests', function(){
+	describe('Game Helper Functions', function(){
+		it('', function(){
+			
+		}); 
+	}); 
+	
+
+}); 

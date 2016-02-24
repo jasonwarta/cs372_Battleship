@@ -105,7 +105,6 @@ if (Meteor.isClient) {
       if(Session.get('gameMode') == 'placing'){
          var ship = Session.get('selectedShip')
          $("#" + ship + "Image").css({left:e.pageX, top:e.pageY}); 
-        console.log("in follow mouse func"); 
       }
       else{
 
