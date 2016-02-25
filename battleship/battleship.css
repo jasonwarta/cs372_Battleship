@@ -160,8 +160,44 @@ body {
 	background-color: skyblue;
 }
 
-#carrierImage{
+/* Awesome Website for getting css code from sprite sheet! 
+http://www.spritecow.com*/
+#shipPack{
 	position:absolute;
+	display: block;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding-left: 200px;
+	overflow: hidden;
+}
+.destroyer{
+	background: url('Battleship_Pack.PNG') -124px -237px; 
+	width: 61px;
+	height: 20px;
+}
+
+.submarine{
+	background: url('Battleship_Pack.PNG') no-repeat -124px -267px; 
+	width: 98px;
+	height: 23px;
+}
+
+.cruiser{
+	background: url('Battleship_Pack.PNG') no-repeat -124px -296px; 
+	width: 92px;
+	height: 25px;
+}
+
+.battleship{
+	background: url('Battleship_Pack.PNG') no-repeat -124px -328px; 
+	width: 139px;
+	height: 27px;
+}
+
+.carrier{
+	background: url('Battleship_Pack.PNG') no-repeat -124px -371px; 
+	width: 167px;
+	height: 38px;
 }
 
 .hover {

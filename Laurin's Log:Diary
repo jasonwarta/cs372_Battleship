@@ -12,4 +12,12 @@ Looking up more information on Meteor. Made a players collection and started to 
 2:19 PM - Had to delete old project, it wouldn't run with the cmd 'meteor run'. Made a new project and copied over the files. I changed the header and the button.
 
 2-19-16
-Pushed new testing framework to git (Jasmine&Velocity). It looks much easier to use and implement than what I’ve seen so far. The tutorials actually work too.
+Pushed new testing framework to git (Jasmine&Velocity). It looks much easier to use and implement than what I’ve seen so far. The tutorials actually work too. The lectures on clean code have been rather nice. I usually follow these rules now-a-days because of my teachers and they are a big help in understanding and coding with others.
+
+2-22-16
+Finally contributed something today. Jason taught me more about how Meteor, Javascript, HTML, and CSS all work together and I think I've finally got a foothold. Made it so a ship is clicked and the ship picture follows the mouse around the browser for user interface convenience. 
+
+2-24-16
+Got the sprite sheet to work with css. Now when the ships
+are selected the appropriate image (and image size) follows the 
+mouse, but is not in the way of the mouse.

@@ -5,6 +5,11 @@ CellArray = new Mongo.Collection('cells');
 
 //Meteor Client Code
 if (Meteor.isClient) {
+<<<<<<< HEAD
+  var ships = {"carrier":5,"battleship":4,"cruiser":3,"submarine":3,"sub":3,"destroyer":2,5:5,4:4,3:3,2:2};
+
+=======
+>>>>>>> 1b4220b84081535872224c1bb52f5bce4ea0b5cd
   Template.game.onRendered( function(){
     
     Meteor.call('initCellArray');
@@ -16,6 +21,8 @@ if (Meteor.isClient) {
     Session.set('rotation',"down");
     Session.set('gameMode','init'); // 'init','placing','waiting','shooting','done'
     Session.set('selectedShip', 'none'); //'carrier', etc
+
+
   });
 
   Template.game.helpers({
@@ -168,6 +175,7 @@ if (Meteor.isClient) {
 
       var cellId = this._id;
       var selectedCell = Session.set('selectedCell', cellId);
+<<<<<<< HEAD
       var ship = Session.get('selectedShip');
       var shipLength;
 
@@ -187,6 +195,15 @@ if (Meteor.isClient) {
           Session.get('rotation'),shipLength
           // Session.get('selectedShip') 
         );
+=======
+
+      if(Session.get('gameMode') == 'placing'){
+        $('#shipPack').css({left:  3, top:  3}); 
+        //$('.' + Session.get('selectedShip')).css({left:  3, top:  3})
+        // Session.set('gameMode', 'waiting'); 
+        // $('#shipPack').css({left:  3, top:  3}); 
+        // $('#shipPack').addClass(Session.get('selectedShip'));
+>>>>>>> 1b4220b84081535872224c1bb52f5bce4ea0b5cd
       }
     },
 
@@ -261,6 +278,20 @@ if (Meteor.isClient) {
     },
 
     //To have ships follow the mouse when it is selected
+<<<<<<< HEAD
+    // 'mousemove': function(e){
+    //   //When placing ships, have image follow mouse movement
+    //   console.log(Session.get('gameMode')); 
+    //   if(Session.get('gameMode') == 'placing'){
+    //      var ship = Session.get('selectedShip')
+    //      $("#" + ship + "Image").css({left:e.pageX, top:e.pageY}); 
+    //     console.log("in follow mouse func"); 
+    //   }
+    //   else{
+
+    //   }
+    // }
+=======
     'mousemove': function(e){
       if(Session.get('gameMode') == 'placing'){
          var ship = Session.get('selectedShip')
@@ -278,6 +309,7 @@ if (Meteor.isClient) {
         $('#shipPack').addClass(ship);
        }
     }
+>>>>>>> 1b4220b84081535872224c1bb52f5bce4ea0b5cd
   });
 }
 
