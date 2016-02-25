@@ -474,8 +474,9 @@ Meteor.methods({
       console.log("Down: " + rotation);
       CellArray.update(
         { '$and': [ 
-          { "x": {'$lte': posX, '$gt': posX-ship } }, 
-          { "y": posY } 
+          { x: {'$lte': posX, } },
+          { x: {'$gt': posX-ship } }, 
+          { y: posY } 
         ] },
         { '$set': 
           { state: "ship"} 
