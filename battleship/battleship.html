@@ -36,7 +36,7 @@
 			<h2 class="label" id="friendly">My ships</h2>
 			<div class="gridContainer">
 				{{#each cell}}
-					<div class="cell friendly {{mouseover}} x{{x}} y{{y}} {{state}}"></div>
+					<div class="cell friendly {{mouseover}} x{{row}} y{{col}} {{state}}"></div>
 				{{/each}}
 			</div>
 		</div>
@@ -46,7 +46,7 @@
 			<h2 class="label" id="enemy">Enemy ships</h2>
 			<div class="gridContainer">
 				{{#each cell}}
-					<div class="cell enemy x{{x}} y{{y}} {{state}}"></div>
+					<div class="cell enemy x{{row}} y{{col}} {{state}}"></div>
 				{{/each}}
 			</div>
 		</div>

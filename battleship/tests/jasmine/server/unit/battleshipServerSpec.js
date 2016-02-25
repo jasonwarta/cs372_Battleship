@@ -15,6 +15,14 @@
 
 // }); 
 
+describe('Connecting to users: ', function(){
+
+  it("Try connecting to a user", function(){
+    console.log(Accounts.findUserByEmail("test1@test.com"));
+  });
+});
+
+
 
 describe('Placing Ships: ', function(){
 

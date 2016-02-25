@@ -163,3 +163,12 @@ body {
 #carrierImage{
 	position:absolute;
 }
+
+.hover {
+	/*background-color: lightsteelblue;*/
+	background-color: black;
+}
+
+.ship {
+	background-color: steelblue;
+}
