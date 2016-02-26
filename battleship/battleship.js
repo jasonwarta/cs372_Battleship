@@ -1,7 +1,21 @@
 PlayersList = new Mongo.Collection('players'); 
 BoardData = new Mongo.Collection('board');
 PlayerAction = new Mongo.Collection('actions');
+// {
+//   _id: alphanumeric string
+//   row: num, 0-9
+//   col: num, 0-9
+//   action: string, "ship","shot"
+// }
+
 CellArray = new Mongo.Collection('cells');
+// {
+//   _id: alphanumeric string
+//   row: num, 0-9
+//   col: num, 0-9
+//   state: string, "empty","ship"
+// }
+
 
 //Meteor Client Code
 if (Meteor.isClient) {
@@ -82,10 +96,14 @@ if (Meteor.isClient) {
         Meteor.call('placeShip',
           Session.get('posX'),
           Session.get('posY'),
-          Session.get('rotation'),shipLength
-          // Session.get('selectedShip') 
+          Session.get('rotation'),
+          shipLength
         );
       }
+
+
+
+
     },
 
     //ship placement handlers
@@ -146,49 +164,48 @@ if (Meteor.isClient) {
     'mousemove': function(e){
       if(Session.get('gameMode') == 'placing'){
 
-        // $("#friendlyBoard").mousemove(function(e){
-        //   $('#shipPack').css({'top': e.clientY - 20, 'left': e.clientX - 20});
-        // });
-
-        var angle = Session.get('rotation');
-        var rotate = {
-          "down":"90deg",
-          "left":"180deg",
-          "up":"360deg",
-          "right":"0deg",
-        };
-
         var ship = Session.get('selectedShip')
-        var ships = ["carrier", "destroyer", "cruiser", 
-          "submarine", "battleship"]; 
+        // var ships = ["carrier", "destroyer", "cruiser", 
+        //   "submarine", "battleship"]; 
 
+        var rotation = Session.get('rotation');
         //delete former classes if user has clicked on any 
           //(ex: switched carrier to sub)
-        $('#shipPack').removeClass(); 
+        var angle = {
+          down: "90deg",
+          left: "180deg",
+          up: "270deg",
+          right: "0deg",
+        }
+
+        $('#shipPack').removeClass();
+
         //follows mouse, but gives space for mouse to click
         $("#friendlyBoard").mousemove(function(e){
           //change offset according to rotation
-          if(angle == "up"){
-
-          }
           $('#shipPack').css({
             left: e.pageX + 3, 
             top: e.pageY + 3
           }); 
         });
-        //add the appropriate sprite class for width,height,etc
-        if(angle=="up"){
-          var rotationClass = "u-"; 
-        }
-        else if(angle=="down"){
-          var rotationClass = "d-"; 
-        }
-        else if(angle=="left"){
-          var rotationClass = "l-"; 
-        }
-        else{
-          var rotationClass = "r-";  
-        }
+          //add the appropriate sprite class for width,height,etc
+          if(rotation=="up"){
+            var rotationClass = "u-"; 
+            $('#shipPack').css({
+              left: e.pageX - 40, //width for every ship to be on left
+              top: e.pageY -30,
+            }); 
+          }
+          else if(rotation=="down"){
+            var rotationClass = "d-"; 
+          }
+          else if(rotation=="left"){
+            var rotationClass = "l-"; 
+          }
+          else{
+            var rotationClass = "r-";  
+          }
+        
         $('#shipPack').addClass(rotationClass + ship); 
        }
     }
@@ -204,37 +221,6 @@ if (Meteor.isServer) {
 
 //Meteor Methods
 Meteor.methods({
-  //initGrid
-  //takes no parameters
-  //populates the gridContainers with elements for each cell
-  // 'initGrid': function(){
-  //   // TODO:
-  //   // link images for the blank grid, ships, hits, misses, and sunk ships to the elements
-  //   var currentUserId = Meteor.userId();
-
-  //   while(BoardData.findOne({ ownedBy: currentUserId })) {
-  //     BoardData.remove({ ownedBy: currentUserId })
-  //   }
-
-  //   for(var i = 0; i < 10; i++){
-  //     for(var j = 0; j < 10; j++){
-  //       BoardData.insert({
-  //         row: i,
-  //         col: j,
-  //         ownedBy: currentUserId,
-  //         state: "empty"
-  //       });
-  //     }
-  //   }
-  //   return "finished init";
-  // },
-
-  //posX is the X position of the cell
-  //posY is the Y position of the cell
-  //rotation is in directions "up","left","down","right" from the clicked location
-  'placeShip': function(posX, posY, rotation){
-    // var currentUserId = Meteor.userId();
-  },
 
   //posX is the X position of the cell
   //posY is the Y position of the cell
@@ -288,85 +274,89 @@ Meteor.methods({
 
   'placeShip': function(posX,posY,rotation,shipLength){
 
-    // console.log("X:"+posX+" Y:"+posY+" R:"+rotation+" S:"+shipLength);
+    if(Meteor.call('checkShipPosition',posX,posY,rotation,shipLength) == "valid position"){
 
-    if (rotation == "left"){
+      if (rotation == "left"){
       
-      CellArray.update(
-        { '$and': [ 
-          { col: {'$gt': posY-shipLength, } },
-          { col: {'$lte': posY } }, 
-          { row: posX } 
-        ] },
-        { '$set': 
-          { state: "ship"} 
-        },
-        { 
-          upsert: false,
-          multi: true 
-        }, 
-          function(error){
-            if(error) console.log(error);
-          } );
+        CellArray.update(
+          { '$and': [ 
+            { col: {'$gt': posY-shipLength, } },
+            { col: {'$lte': posY } }, 
+            { row: posX } 
+          ] },
+          { '$set': 
+            { state: "ship"} 
+          },
+          { 
+            upsert: false,
+            multi: true 
+          }, 
+            function(error){
+              if(error) console.log(error);
+            } );
 
-    } else if (rotation == "right") {
-      
-      CellArray.update(
-        { '$and': [ 
-          { col: {'$gte': posY, } },
-          { col: {'$lt': posY+shipLength } }, 
-          { row: posX } 
-        ] },
-        { '$set': 
-          { state: "ship"} 
-        },
-        { 
-          upsert: false,
-          multi: true 
-        }, 
-          function(error){
-            if(error) console.log(error);
-          } );
+      } else if (rotation == "right") {
+        
+        CellArray.update(
+          { '$and': [ 
+            { col: {'$gte': posY, } },
+            { col: {'$lt': posY+shipLength } }, 
+            { row: posX } 
+          ] },
+          { '$set': 
+            { state: "ship"} 
+          },
+          { 
+            upsert: false,
+            multi: true 
+          }, 
+            function(error){
+              if(error) console.log(error);
+            } );
 
-    } else if (rotation == "up") {
+      } else if (rotation == "up") {
 
-      CellArray.update(
-        { '$and': [ 
-          { row: {'$gt': posX-shipLength, } },
-          { row: {'$lte': posX } }, 
-          { col: posY } 
-        ] },
-        { '$set': 
-          { state: "ship"} 
-        },
-        { 
-          upsert: false,
-          multi: true 
-        }, 
-          function(error){
-            if(error) console.log(error);
-          } );
+        CellArray.update(
+          { '$and': [ 
+            { row: {'$gt': posX-shipLength, } },
+            { row: {'$lte': posX } }, 
+            { col: posY } 
+          ] },
+          { '$set': 
+            { state: "ship"} 
+          },
+          { 
+            upsert: false,
+            multi: true 
+          }, 
+            function(error){
+              if(error) console.log(error);
+            } );
 
-    } else if (rotation == "down") {
-      
-      CellArray.update(
-        { '$and': [ 
-          { row: {'$gte': posX, } },
-          { row: {'$lt': posX+shipLength } }, 
-          { col: posY } 
-        ] },
-        { '$set': 
-          { state: "ship"} 
-        },
-        { 
-          upsert: false,
-          multi: true 
-        }, 
-          function(error){
-            if(error) console.log(error);
-          } );
+      } else if (rotation == "down") {
+        
+        CellArray.update(
+          { '$and': [ 
+            { row: {'$gte': posX, } },
+            { row: {'$lt': posX+shipLength } }, 
+            { col: posY } 
+          ] },
+          { '$set': 
+            { state: "ship"} 
+          },
+          { 
+            upsert: false,
+            multi: true 
+          }, 
+            function(error){
+              if(error) console.log(error);
+            } );
+
+      }
 
     }
+
+    
 
   },
   'findUser': function(){

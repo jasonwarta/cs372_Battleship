@@ -1,8 +1,8 @@
-/* globals Song: true */
+// /* globals Song: true */
 
-Song = function Song() {};
+// Song = function Song() {};
 
-Song.prototype.persistFavoriteStatus = function() {
-  // something complicated
-  throw new Error('not yet implemented');
-};
+// Song.prototype.persistFavoriteStatus = function() {
+//   // something complicated
+//   throw new Error('not yet implemented');
+// };

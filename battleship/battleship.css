@@ -160,63 +160,66 @@ body {
 	background-color: skyblue;
 }
 
+.ship {
+	background-color: steelblue;
+}
+
 /* Awesome Website for getting css code from sprite sheet! 
 http://www.spritecow.com*/
 #shipPack{
 	position:absolute;
 }
+/*
 .destroyer{
 	background: url('battleship_sprites.png') no-repeat -365px -11px;
 	width: 20px;
 	height: 61px;
-	/*background: url('Battleship_Pack.PNG') no-repeat -124px -237px; 
-	width: 61px;
-	height: 20px;*/
+	
 }
 
 .submarine{
 	background: url('battleship_sprites.png') no-repeat -332px -11px;
 	width: 23px;
 	height: 98px;
-	/*background: url('Battleship_Pack.PNG') no-repeat -124px -267px; 
-	width: 98px;
-	height: 23px;*/
+
 }
 
 .cruiser{
 	background: url('battleship_sprites.png') no-repeat -301px -11px;
 	width: 25px;
 	height: 92px;
-	/*background: url('Battleship_Pack.PNG') no-repeat -124px -296px; 
-	width: 92px;
-	height: 25px;*/
+
 }
 
 .battleship{
 	background: url('battleship_sprites.png') no-repeat -267px -11px;
 	width: 27px;
 	height: 139px;
-	/*background: url('Battleship_Pack.PNG') no-repeat -124px -328px; 
-	width: 139px;
-	height: 27px;*/
+
 }
 
 .carrier{
 	background: url('battleship_sprites.png') no-repeat -213px -11px;
 	width: 38px;
 	height: 167px;
-	/*background: url('Battleship_Pack.PNG') no-repeat -124px -371px; 
-	width: 167px;
-	height: 38px;*/
-}
+}*/
 
-.ship {
-	background-color: steelblue;
+/*
+rotated sprtes
+*/
+/*#sprite {
+	background: url('battleship_sprites.png');
+	position:absolute;
+	display: block;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding-left: 200px;
+	overflow: hidden;
 }
 
 .sprites {
 	background: url('../Battleship_Pack.PNG');
-}
+}*/
 
 .r-destroyer {
 	background: url('battleship_sprites.png') no-repeat -5px -6px;
