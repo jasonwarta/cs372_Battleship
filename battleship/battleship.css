@@ -164,11 +164,6 @@ body {
 http://www.spritecow.com*/
 #shipPack{
 	position:absolute;
-	display: block;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-	padding-left: 200px;
-	overflow: hidden;
 }
 .destroyer{
 	background: url('Battleship_Pack.PNG') no-repeat -124px -237px;
