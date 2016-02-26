@@ -164,18 +164,32 @@ if (Meteor.isClient) {
 
         //delete former classes if user has clicked on any 
           //(ex: switched carrier to sub)
-        for(var i=0; i<5; ++i){
-          $('#shipPack').removeClass(ships[i]); 
-        }
+        $('#shipPack').removeClass(); 
         //follows mouse, but gives space for mouse to click
         $("#friendlyBoard").mousemove(function(e){
+          //change offset according to rotation
+          if(angle == "up"){
+
+          }
           $('#shipPack').css({
             left: e.pageX + 3, 
-            top: e.pageY + 3,
+            top: e.pageY + 3
           }); 
         });
         //add the appropriate sprite class for width,height,etc
-        $('#shipPack').addClass(ship);
+        if(angle=="up"){
+          var rotationClass = "u-"; 
+        }
+        else if(angle=="down"){
+          var rotationClass = "d-"; 
+        }
+        else if(angle=="left"){
+          var rotationClass = "l-"; 
+        }
+        else{
+          var rotationClass = "r-";  
+        }
+        $('#shipPack').addClass(rotationClass + ship); 
        }
     }
   });

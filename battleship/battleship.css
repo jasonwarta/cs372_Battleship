@@ -166,45 +166,45 @@ http://www.spritecow.com*/
 	position:absolute;
 }
 .destroyer{
-	background: url('Battleship_Pack.PNG') no-repeat -124px -237px;
-	width: 61px;
-	height: 20px;
+	background: url('battleship_sprites.png') no-repeat -365px -11px;
+	width: 20px;
+	height: 61px;
 	/*background: url('Battleship_Pack.PNG') no-repeat -124px -237px; 
 	width: 61px;
 	height: 20px;*/
 }
 
 .submarine{
-	background: url('Battleship_Pack.PNG') no-repeat -124px -267px;
-	width: 98px;
-	height: 23px;
+	background: url('battleship_sprites.png') no-repeat -332px -11px;
+	width: 23px;
+	height: 98px;
 	/*background: url('Battleship_Pack.PNG') no-repeat -124px -267px; 
 	width: 98px;
 	height: 23px;*/
 }
 
 .cruiser{
-	background: url('Battleship_Pack.PNG') no-repeat -124px -296px;
-	width: 92px;
-	height: 25px;
+	background: url('battleship_sprites.png') no-repeat -301px -11px;
+	width: 25px;
+	height: 92px;
 	/*background: url('Battleship_Pack.PNG') no-repeat -124px -296px; 
 	width: 92px;
 	height: 25px;*/
 }
 
 .battleship{
-	background: url('Battleship_Pack.PNG') no-repeat -124px -328px;
-	width: 139px;
-	height: 27px;
+	background: url('battleship_sprites.png') no-repeat -267px -11px;
+	width: 27px;
+	height: 139px;
 	/*background: url('Battleship_Pack.PNG') no-repeat -124px -328px; 
 	width: 139px;
 	height: 27px;*/
 }
 
 .carrier{
-	background: url('Battleship_Pack.PNG') no-repeat -124px -371px;
-	width: 167px;
-	height: 38px;
+	background: url('battleship_sprites.png') no-repeat -213px -11px;
+	width: 38px;
+	height: 167px;
 	/*background: url('Battleship_Pack.PNG') no-repeat -124px -371px; 
 	width: 167px;
 	height: 38px;*/
@@ -215,5 +215,125 @@ http://www.spritecow.com*/
 }
 
 .sprites {
-	background: url('../public/Battleship_Pack.PNG');
+	background: url('../Battleship_Pack.PNG');
+}
+
+.r-destroyer {
+	background: url('battleship_sprites.png') no-repeat -5px -6px;
+	width: 61px;
+	height: 20px;
+}
+
+.r-submarine {
+	background: url('battleship_sprites.png') no-repeat -5px -36px;
+	width: 98px;
+	height: 23px;
+}
+
+.r-cruiser {
+	background: url('battleship_sprites.png') no-repeat -5px -65px;
+	width: 92px;
+	height: 25px;
+}
+
+.r-battleship {
+	background: url('battleship_sprites.png') no-repeat -5px -97px;
+	width: 139px;
+	height: 27px;
+}
+
+.r-carrier {
+	background: url('battleship_sprites.png') no-repeat -5px -140px;
+	width: 167px;
+	height: 38px;
+}
+  /**/
+.u-destroyer {
+	background: url('battleship_sprites.png') no-repeat -24px -322px;
+	width: 20px;
+	height: 61px;
+}
+
+.u-submarine {
+	background: url('battleship_sprites.png') no-repeat -54px -285px;
+	width: 23px;
+	height: 98px;
+}
+
+.u-cruiser {
+	background: url('battleship_sprites.png') no-repeat -83px -291px;
+	width: 25px;
+	height: 92px;
+}
+
+.u-battleship {
+	background: url('battleship_sprites.png') no-repeat -115px -244px;
+	width: 27px;
+	height: 139px;
+}
+
+.u-carrier {
+	background: url('battleship_sprites.png') no-repeat -158px -216px;
+	width: 38px;
+	height: 167px;
+}
+
+.l-destroyer {
+	background: url('battleship_sprites.png') no-repeat -326px -353px;
+	width: 61px;
+	height: 20px;
+}
+
+.l-submarine {
+	background: url('battleship_sprites.png') no-repeat -289px -320px;
+	width: 98px;
+	height: 23px;
+}
+
+.l-cruiser {
+	background: url('battleship_sprites.png') no-repeat -295px -289px;
+	width: 92px;
+	height: 25px;
+}
+
+.l-battleship {
+	background: url('battleship_sprites.png') no-repeat -248px -255px;
+	width: 139px;
+	height: 27px;
+}
+
+.l-carrier {
+	background: url('battleship_sprites.png') no-repeat -220px -201px;
+	width: 167px;
+	height: 38px;
+}
+
+.d-destroyer {
+	background: url('battleship_sprites.png') no-repeat -365px -11px;
+	width: 20px;
+	height: 61px;
+}
+
+.d-submarine {
+	background: url('battleship_sprites.png') no-repeat -332px -11px;
+	width: 23px;
+	height: 98px;
+}
+
+.d-cruiser {
+	background: url('battleship_sprites.png') no-repeat -301px -11px;
+	width: 25px;
+	height: 92px;
+}
+
+.d-battleship {
+	background: url('battleship_sprites.png') no-repeat -267px -11px;
+	width: 27px;
+	height: 139px;
+}
+
+.d-carrier {
+	background: url('battleship_sprites.png') no-repeat -213px -11px;
+	width: 38px;
+	height: 167px;
 }
