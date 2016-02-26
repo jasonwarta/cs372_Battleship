@@ -171,39 +171,54 @@ http://www.spritecow.com*/
 	overflow: hidden;
 }
 .destroyer{
-	background: url('Battleship_Pack.PNG') -124px -237px; 
+	background: url('Battleship_Pack.PNG') no-repeat -124px -237px;
 	width: 61px;
 	height: 20px;
+	/*background: url('Battleship_Pack.PNG') no-repeat -124px -237px; 
+	width: 61px;
+	height: 20px;*/
 }
 
 .submarine{
-	background: url('Battleship_Pack.PNG') no-repeat -124px -267px; 
+	background: url('Battleship_Pack.PNG') no-repeat -124px -267px;
 	width: 98px;
 	height: 23px;
+	/*background: url('Battleship_Pack.PNG') no-repeat -124px -267px; 
+	width: 98px;
+	height: 23px;*/
 }
 
 .cruiser{
-	background: url('Battleship_Pack.PNG') no-repeat -124px -296px; 
+	background: url('Battleship_Pack.PNG') no-repeat -124px -296px;
 	width: 92px;
 	height: 25px;
+	/*background: url('Battleship_Pack.PNG') no-repeat -124px -296px; 
+	width: 92px;
+	height: 25px;*/
 }
 
 .battleship{
-	background: url('Battleship_Pack.PNG') no-repeat -124px -328px; 
+	background: url('Battleship_Pack.PNG') no-repeat -124px -328px;
 	width: 139px;
 	height: 27px;
+	/*background: url('Battleship_Pack.PNG') no-repeat -124px -328px; 
+	width: 139px;
+	height: 27px;*/
 }
 
 .carrier{
-	background: url('Battleship_Pack.PNG') no-repeat -124px -371px; 
+	background: url('Battleship_Pack.PNG') no-repeat -124px -371px;
 	width: 167px;
 	height: 38px;
-}
-
-.hover {
-	background-color: lightsteelblue;
+	/*background: url('Battleship_Pack.PNG') no-repeat -124px -371px; 
+	width: 167px;
+	height: 38px;*/
 }
 
 .ship {
 	background-color: steelblue;
+}
+
+.sprites {
+	background: url('../public/Battleship_Pack.PNG');
 }

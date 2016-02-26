@@ -59,7 +59,29 @@ carried away a little bit. Refactored the way the cell generation is done, so it
 tied to the ID of the logged in user.  This reduce the size of the database we need to
 share between clients going forward.
 
-2016.02.20
+2016.02.21 Sunday
+Spent all day working on hw for cs321, cs331, math253
+
+2016.02.22 Monday
+5 hours, including class. Beating my head against the wall trying to figure out how
+to update multiple documents in a database.
+Spent a couple hours in the evening working on cs331 lexer.
+
+2016.02.23 Tuesday
+Working out fringe issues in cs331 lexer.
+
+2016.02.24 Wednesday
+5 hours. Played around with the account functionality built into Meteor in preperation
+for multiplayer.  Set up and passed a test to determine how easy it will be to link
+players.  
+
+2016.02.25 Thursday
+4 hours.  Finally figured out how to update a group of items in a collection.  Ruled out
+dynamic updating for mouseover due to extreme lag in both server-side and client-side 
+implementations.  Spent a couple more hours working on lexer.
+
+
+
 
 
 

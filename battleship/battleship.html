@@ -7,6 +7,9 @@
   {{#if currentUser}}
   	{{> game }}
   {{/if}}
+
+
+
 </body>
 
 
@@ -34,7 +37,7 @@
 		<!-- player board -->
 		<div class="board" id="leftBoard">
 			<h2 class="label" id="friendly">My ships</h2>
-			<div class="gridContainer">
+			<div class="gridContainer" id="friendlyBoard">
 				{{#each cell}}
 					<div class="cell friendly {{mouseover}} x{{row}} y{{col}} {{state}}"></div>
 				{{/each}}
@@ -44,7 +47,7 @@
 		<!-- enemy board -->
 		<div class="board" id="rightBoard">
 			<h2 class="label" id="enemy">Enemy ships</h2>
-			<div class="gridContainer">
+			<div class="gridContainer" id="enemyBoard">
 				{{#each cell}}
 					<div class="cell enemy x{{row}} y{{col}} {{state}}"></div>
 				{{/each}}
@@ -67,7 +70,9 @@
 	<button class="resetGrid">Reset Grid</button>
 
 	{{#if placing}}
-		<img id="shipPack" src="Battleship_Pack.PNG"/>
+  	<!-- <span class="sprites" id="shipPack"></span> -->
+
+		<img id="shipPack" src="Battleship_Pack.PNG" />
 	{{/if}}
 
 </template>

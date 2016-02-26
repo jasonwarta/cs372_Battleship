@@ -134,36 +134,33 @@ if (Meteor.isClient) {
                   Session.get('posX') + " " + 
                   Session.get('posY') + " " + 
                   Session.get('rotation') );
-
-      // if(Session.get('gameMode') == 'placing'){
-      //   Meteor.call('mouseoverShip',
-      //     Session.get('posX'),
-      //     Session.get('posY'),
-      //     Session.get('rotation'),
-      //     Session.get('selectedShip'),
-      //     Session.get('mouseState'),
-      //     function(error){
-      //       if(error) console.log(error);
-      //     } );
-      // }
-
     },
 
     'mouseleave .friendly': function() {
       var cellId = this._id;
       Session.set('mouseState','leave');
       Session.set('leaveCell',cellId);
-      // Session.set('posX',$(e.currentTarget).attr('x'));
-      // Session.set('posY',$(e.currentTarget).attr('y'));
-      // Session.set('mouse',e);
     },
 
     //To have ships follow the mouse when it is selected
     'mousemove': function(e){
       if(Session.get('gameMode') == 'placing'){
-         var ship = Session.get('selectedShip')
-         var ships = ["carrier", "destroyer", "cruiser", 
-         "submarine", "battleship"]; 
+
+        // $("#friendlyBoard").mousemove(function(e){
+        //   $('#shipPack').css({'top': e.clientY - 20, 'left': e.clientX - 20});
+        // });
+
+        var angle = Session.get('rotation');
+        var rotate = {
+          "down":"90deg",
+          "left":"180deg",
+          "up":"360deg",
+          "right":"0deg",
+        };
+
+        var ship = Session.get('selectedShip')
+        var ships = ["carrier", "destroyer", "cruiser", 
+          "submarine", "battleship"]; 
 
         //delete former classes if user has clicked on any 
           //(ex: switched carrier to sub)
@@ -171,7 +168,12 @@ if (Meteor.isClient) {
           $('#shipPack').removeClass(ships[i]); 
         }
         //follows mouse, but gives space for mouse to click
-        $('#shipPack').css({left: e.pageX + 3, top: e.pageY + 3}); 
+        $("#friendlyBoard").mousemove(function(e){
+          $('#shipPack').css({
+            left: e.pageX + 3, 
+            top: e.pageY + 3,
+          }); 
+        });
         //add the appropriate sprite class for width,height,etc
         $('#shipPack').addClass(ship);
        }
@@ -269,121 +271,6 @@ Meteor.methods({
     }
   },
 
-  'mouseoverShip': function(posX,posY,rotation,shipLength){
-
-    if (rotation == "left"){
-      
-      CellArray.update(
-        { '$and': [ 
-          { col: {'$gt': posY-shipLength, } },
-          { col: {'$lte': posY } }, 
-          { row: posX } 
-        ] },
-        { '$set': 
-          { state: "hover"} 
-        },
-        { 
-          upsert: false,
-          multi: true 
-        }, 
-          function(error){
-            if(error) console.log(error);
-          } );
-
-    } else if (rotation == "right") {
-      
-      CellArray.update(
-        { '$and': [ 
-          { col: {'$gte': posY, } },
-          { col: {'$lt': posY+shipLength } }, 
-          { row: posX } 
-        ] },
-        { '$set': 
-          { state: "hover"} 
-        },
-        { 
-          upsert: false,
-          multi: true 
-        }, 
-          function(error){
-            if(error) console.log(error);
-          } );
-
-    } else if (rotation == "up") {
-
-      CellArray.update(
-        { '$and': [ 
-          { row: {'$gt': posX-shipLength, } },
-          { row: {'$lte': posX } }, 
-          { col: posY } 
-        ] },
-        { '$set': 
-          { state: "hover"} 
-        },
-        { 
-          upsert: false,
-          multi: true 
-        }, 
-          function(error){
-            if(error) console.log(error);
-          } );
-
-    } else if (rotation == "down") {
-      
-      CellArray.update(
-        { '$and': [ 
-          { row: {'$gte': posX, } },
-          { row: {'$lt': posX+shipLength } }, 
-          { col: posY } 
-        ] },
-        { '$set': 
-          { state: "hover"} 
-        },
-        { 
-          upsert: false,
-          multi: true 
-        }, 
-          function(error){
-            if(error) console.log(error);
-          } );
-
-    }
-
-  },
-
-  'unhoverCells': function(){
-    // var cellIds = [];
-    // CellArray.find({ state: 'hover'}).fetch().forEach(function(item){
-    //   cellIds.push(item._id);
-    // });
-    // console.log(cellIds);
-
-    // CellArray.update(
-    //   {id: 
-    //     {'$in':cellIds}},{ '$set': 
-    //     {state:'empty'} 
-    //   },
-    //   {
-    //     upsert:false,
-    //     multi:true
-    //   },
-    //     function(error){
-    //       if(error) console.log(error);
-    //     });
-
-    // CellArray.update(
-    //   { state: 'hover'},
-    //   { '$set': 
-    //     {state:'empty'} 
-    //   },
-    //   {
-    //     upsert:false,
-    //     multi:true
-    //   },
-    //     function(error){
-    //       if(error) console.log(error);
-    //     });
-  }, 
 
   'placeShip': function(posX,posY,rotation,shipLength){
 
