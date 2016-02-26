@@ -85,19 +85,19 @@ if (Meteor.isClient) {
         //     //   { y: { $eq: posY } } ] }, //cell y = posY
         //     //   { $set: { state: "hover" } } ); //set the state to hover
           // } else 
-          if (rotation == "right" || rotation == "left") {
-            console.log(rotation);
-            var cells = CellArray.find( { "col": posY }).fetch();
-            for(var i = 0; i < cells.length; i++){
-              var cellId = cells[i]._id;
+          // if (rotation == "right" || rotation == "left") {
+          //   console.log(rotation);
+          //   var cells = CellArray.find( { "col": posY }).fetch();
+          //   for(var i = 0; i < cells.length; i++){
+          //     var cellId = cells[i]._id;
 
-              if( cells[i].row >= Session.get('posX') && cells[i].row < (posX+ships.ship) ) {
-                console.log("updating cell: " + cellId);
-                CellArray.update({_id: cellId},
-                                 {$set: { state: "hover" } } );
-              }
-            }
-          }
+          //     if( cells[i].row >= Session.get('posX') && cells[i].row < (posX+ships.ship) ) {
+          //       console.log("updating cell: " + cellId);
+          //       CellArray.update({_id: cellId},
+          //                        {$set: { state: "hover" } } );
+          //     }
+          //   }
+          // }
         //     CellArray.update({ $and:[
         //       { x: { $gte: posX } }, //cell x gte posX
         //       { x: { $lt: (posX + ships.ship) } }, //cell x lt posX + shipLength
@@ -110,39 +110,39 @@ if (Meteor.isClient) {
         //       { x: { $eq: posX } } ] }, //cell x = posX
         //       { $set: { state: "hover" } } ); //set the state to hover
           // } else 
-          else if (rotation == "down" || rotation == 'up') {
-            console.log(rotation);
-            // var cells = CellArray.find( { $and: [
-            //   { "x": posX },
-            //   { "y": { "$gte": posY, "$lt": (posY + ships.ship) }}
-            //   ]}).fetch();
+          // else if (rotation == "down" || rotation == 'up') {
+          //   console.log(rotation);
+          //   // var cells = CellArray.find( { $and: [
+          //   //   { "x": posX },
+          //   //   { "y": { "$gte": posY, "$lt": (posY + ships.ship) }}
+          //   //   ]}).fetch();
 
 
-            var cells = CellArray.find( { "row": posX }).fetch();
+          //   var cells = CellArray.find( { "row": posX }).fetch();
 
-            // console.log("entering loop with " + cells.length + " items");
+          //   // console.log("entering loop with " + cells.length + " items");
 
-            // cells.forEach(function(item){
-            //   console.log("entering for loop: got " + cells.length + " items in fetch op");
-            //   CellArray.update({id: item._id},{ $set: { state: "hover" } });
-            // });
+          //   // cells.forEach(function(item){
+          //   //   console.log("entering for loop: got " + cells.length + " items in fetch op");
+          //   //   CellArray.update({id: item._id},{ $set: { state: "hover" } });
+          //   // });
 
-            // var cells = CellArray.find( { "x": posX }).fetch();
-            for(var i = 0; i < cells.length; i++){
-              var cellId = cells[i]._id;
+          //   // var cells = CellArray.find( { "x": posX }).fetch();
+          //   for(var i = 0; i < cells.length; i++){
+          //     var cellId = cells[i]._id;
 
-              if( cells[i].col >= Session.get('posY') && cells[i].col < (posY+ships.ship) ) {
-                console.log("updating cell: " + cellId);
-                CellArray.update({_id: cellId},
-                                 {$set: { state: "hover" } } );
-              }
-            }
-            // for (var item in cells){
-            //   console.log("Cell ID: " + item._id);
-            //   CellArray.update({_id: item._id},
-            //                     { $set: { state: "hover" } });
-            // }
-          }
+          //     if( cells[i].col >= Session.get('posY') && cells[i].col < (posY+ships.ship) ) {
+          //       console.log("updating cell: " + cellId);
+          //       CellArray.update({_id: cellId},
+          //                        {$set: { state: "hover" } } );
+          //     }
+          //   }
+          //   // for (var item in cells){
+          //   //   console.log("Cell ID: " + item._id);
+          //   //   CellArray.update({_id: item._id},
+          //   //                     { $set: { state: "hover" } });
+          //   // }
+          // }
 
 
         
@@ -415,171 +415,87 @@ Meteor.methods({
 
   },
 
-  'placeShip': function(posX,posY,rotation,ship){
-    var fleet = {"carrier":5,"battleship":4,"cruiser":3,"submarine":3,"destroyer":2};
+  'placeShip': function(posX,posY,rotation,shipLength){
 
-    console.log("X:"+posX+" Y:"+posY+" R:"+rotation+" S:"+ship);
+    console.log("X:"+posX+" Y:"+posY+" R:"+rotation+" S:"+shipLength);
 
     if (rotation == "left"){
-      console.log("Left: "+ rotation);
-      CellArray.update({ $and:[
-          { x: { $lte: posX, $gt: (posX - ship) } }, //cell x lte posX
-          // { x: { $gt: (posX - ships.ship) } }, //cell x gt posX - shipLength
-          { y: posY } ] }, //cell y = posY
-          { $set: { state: "ship" } }, function(){
-            console.log("left")
-          } ); //set the state to hover
-      // var arr = [];
-      // for(var i = posY-fleet.ship+1; i <= posY; i++){
-      //   arr.push(i);
-      // }
-      // console.log(arr);
-
-    } else if (rotation == "right") {
-      console.log("Right: " + rotation);
-      CellArray.update({ $and:[
-          { x: { $lte: posX, $gt: (posX - ship) } }, //cell x lte posX
-          // { x: { $gt: (posX - ships.ship) } }, //cell x gt posX - shipLength
-          { y: posY } ] }, //cell y = posY
-          { $set: { state: "ship" } }, function(){
-            console.log("right")
-          } ); //set the state to hover
-
-      // var arr = [];
-      // for(var i = posY-fleet.ship+1; i <= posY; i++){
-      //   arr.push(i);
-      // }
-      // console.log(arr);
-
-    } else if (rotation == "up") {
-      console.log("Up: " + rotation);
-      CellArray.update({ $and:[
-          { x: { $lte: posX, $gt: (posX - ship) } }, //cell x lte posX
-          // { x: { $gt: (posX - ships.ship) } }, //cell x gt posX - shipLength
-          { y: posY } ] }, //cell y = posY
-          { $set: { state: "hover" } }, function(){
-            console.log("up")
-          } ); //set the state to hover
-
-      // var arr = [];
-      // for(var i = posY-fleet.ship+1; i <= posY; i++){
-      //   arr.push(i);
-      // }
-      // console.log(arr);
-
-    } else if (rotation == "down") {
-      // var qlist = [];
-      // CellArray.find().forEach(function(item){
-      //   var obj = {};
-      //   obj[row] = item.row;
-      //   obj[col] = item.col;
-      //   obj[state] = item.state;
-      //   qlist.push(obj);
-      // });
-
-      // qlist.forEach(function(item){
-      //   if()
-      // });
-
-
-      console.log("Down: " + rotation);
+      
       CellArray.update(
         { '$and': [ 
-          { x: {'$lte': posX, } },
-          { x: {'$gt': posX-ship } }, 
-          { y: posY } 
+          { col: {'$gt': posY-shipLength, } },
+          { col: {'$lte': posY } }, 
+          { row: posX } 
         ] },
         { '$set': 
           { state: "ship"} 
         },
         { 
-          upsert: true,
+          upsert: false,
           multi: true 
         }, 
           function(error){
             if(error) console.log(error);
           } );
 
-      // CellArray.update({ $and:[
-      //     { "x": { $lte: posX, $gt: (posX - ship) } }, //cell x lte posX
-      //     // { x: { $gt: (posX - ships.ship) } }, //cell x gt posX - shipLength
-      //     { "y": posY } ] }, //cell y = posY
-      //     { $set: { state: "ship" } }, function(){
-      //       console.log("down")
-      //     } ); //set the state to hover
+    } else if (rotation == "right") {
+      
+      CellArray.update(
+        { '$and': [ 
+          { col: {'$gte': posY, } },
+          { col: {'$lt': posY+shipLength } }, 
+          { row: posX } 
+        ] },
+        { '$set': 
+          { state: "ship"} 
+        },
+        { 
+          upsert: false,
+          multi: true 
+        }, 
+          function(error){
+            if(error) console.log(error);
+          } );
 
-      // var arr = [];
-      // for(var i = posY-fleet.ship+1; i <= posY; i++){
-      //   arr.push(i);
-      // }
-      // console.log(arr);
+    } else if (rotation == "up") {
+
+      CellArray.update(
+        { '$and': [ 
+          { row: {'$gt': posX-shipLength, } },
+          { row: {'$lte': posX } }, 
+          { col: posY } 
+        ] },
+        { '$set': 
+          { state: "ship"} 
+        },
+        { 
+          upsert: false,
+          multi: true 
+        }, 
+          function(error){
+            if(error) console.log(error);
+          } );
+
+    } else if (rotation == "down") {
+      
+      CellArray.update(
+        { '$and': [ 
+          { row: {'$gte': posX, } },
+          { row: {'$lt': posX+shipLength } }, 
+          { col: posY } 
+        ] },
+        { '$set': 
+          { state: "ship"} 
+        },
+        { 
+          upsert: false,
+          multi: true 
+        }, 
+          function(error){
+            if(error) console.log(error);
+          } );
 
     }
-
-
-
-
-    // if(mouseState == 'enter'){
-      // if(rotation == "left") {
-      //   CellArray.update({ $and:[
-      //     { x: { $lte: posX } }, //cell x lte posX
-      //     { x: { $gt: (posX - ships.ship) } }, //cell x gt posX - shipLength
-      //     { y: posY } ] }, //cell y = posY
-      //     { $set: { state: "hover" } } ); //set the state to hover
-      // } else if (rotation == "right") {
-      //   CellArray.update({ $and:[
-      //     { x: { $gte: posX } }, //cell x gte posX
-      //     { x: { $lt: (posX + ships.ship) } }, //cell x lt posX + shipLength
-      //     { y: posY } ] }, //cell y = posY
-      //     { $set: { state: "hover" } } ); //set the state to hover
-      // } else if (rotation == "up") {
-      //   CellArray.update({ $and:[
-      //     { y: { $lte: posY } }, //cell y gte posY
-      //     { y: { $gt: (posY - ships.ship) } }, //cell y lt posY + shipLength
-      //     { x: posX } ] }, //cell x = posX
-      //     { $set: { state: "hover" } } ); //set the state to hover
-      // } else if (rotation == "down") {
-      //   var cells = CellArray.find( { "x": posX }).fetch();
-      //       for(var i = 0; i < cells.length; i++){
-      //         var cellId = cells[i]._id;
-
-      //         if( cells[i].y >= posY && cells[i].y < posY+ships.ship ){
-      //           console.log(cellId);
-      //           CellArray.update({_id: cellId},
-      //                            {$set: { state: "ship" } } );
-      //         }
-      //       }
-
-        // var cells = CellArray.find( { $and:[
-        //   { y: { $gte: posY } }, //cell y gte posY
-        //   { y: { $lt: (posY + ships.ship) } }, //cell y lt posY + shipLength
-        //   { x: posX } 
-        //   ] });
-
-        // for(var i = 0; i < cells.length; i++){
-        //   CellArray.update({_id: cellId[i]._id},
-        //                     { $set: { state: "hover" } });
-        // }
-
-        // var other = posY+ships.ship;
-        // CellArray.update( { $and: [
-        //       { x: posX },
-        //       { y: { $gte: posY, $lt: other } } ] },//, $lt: (posY + ships.ship)
-        //       { $set: { state: "hover" } } );
-
-        // CellArray.update({ $and:[
-        //   { y: { $gte: posY } }, //cell y gte posY
-        //   { y: { $lt: (posY + ships.ship) } }, //cell y lt posY + shipLength
-        //   { x: posX } ] }, //cell x = posX
-        //   { $set: { state: "hover" } } ); //set the state to hover
-      // }
-
-    // } else { //mouseState == 'leave'
-    //   CellArray.update(
-    //     { state: "hover" }, 
-    //     { $set: { state:"empty" } } );
-      
-    // }
 
   },
   'findUser': function(){
