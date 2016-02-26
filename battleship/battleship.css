@@ -168,6 +168,7 @@ body {
 http://www.spritecow.com*/
 #shipPack{
 	position:absolute;
+<<<<<<< HEAD
 	display: block;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
@@ -175,6 +176,8 @@ http://www.spritecow.com*/
 	overflow: hidden;
 	/*width: 400px;*/
 	/*height: 400px;*/
+=======
+>>>>>>> 5ef9946fc219586655eb0ad311450492d7b6c131
 }
 
 .destroyer{
