@@ -160,6 +160,10 @@ body {
 	background-color: skyblue;
 }
 
+.ship {
+	background-color: steelblue;
+}
+
 /* Awesome Website for getting css code from sprite sheet! 
 http://www.spritecow.com*/
 #shipPack{
@@ -169,56 +173,170 @@ http://www.spritecow.com*/
 	box-sizing: border-box;
 	padding-left: 200px;
 	overflow: hidden;
+	/*width: 400px;*/
+	/*height: 400px;*/
 }
+
 .destroyer{
-	background: url('Battleship_Pack.PNG') no-repeat -124px -237px;
+	background: url('Battleship_Pack.PNG') no-repeat -124px -237px; 
 	width: 61px;
 	height: 20px;
-	/*background: url('Battleship_Pack.PNG') no-repeat -124px -237px; 
-	width: 61px;
-	height: 20px;*/
 }
 
 .submarine{
-	background: url('Battleship_Pack.PNG') no-repeat -124px -267px;
+	background: url('Battleship_Pack.PNG') no-repeat -124px -267px; 
 	width: 98px;
 	height: 23px;
-	/*background: url('Battleship_Pack.PNG') no-repeat -124px -267px; 
-	width: 98px;
-	height: 23px;*/
 }
 
 .cruiser{
-	background: url('Battleship_Pack.PNG') no-repeat -124px -296px;
+	background: url('Battleship_Pack.PNG') no-repeat -124px -296px; 
 	width: 92px;
 	height: 25px;
-	/*background: url('Battleship_Pack.PNG') no-repeat -124px -296px; 
-	width: 92px;
-	height: 25px;*/
 }
 
 .battleship{
-	background: url('Battleship_Pack.PNG') no-repeat -124px -328px;
+	background: url('Battleship_Pack.PNG') no-repeat -124px -328px; 
 	width: 139px;
 	height: 27px;
-	/*background: url('Battleship_Pack.PNG') no-repeat -124px -328px; 
-	width: 139px;
-	height: 27px;*/
 }
 
 .carrier{
-	background: url('Battleship_Pack.PNG') no-repeat -124px -371px;
+	background: url('Battleship_Pack.PNG') no-repeat -124px -371px; 
 	width: 167px;
 	height: 38px;
-	/*background: url('Battleship_Pack.PNG') no-repeat -124px -371px; 
+}
+
+
+/*
+rotated sprtes
+*/
+#sprite {
+	background: url('battleship_sprites.png');
+	position:absolute;
+	display: block;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding-left: 200px;
+	overflow: hidden;
+}
+
+.r_destroyer {
+	background-position: -5px -6px;
+	width: 61px;
+	height: 20px;
+}
+
+.r_submarine {
+	background-position: -5px -36px;
+	width: 98px;
+	height: 23px;
+}
+
+.r_cruiser {
+	background-position: -5px -36px;
+	width: 98px;
+	height: 23px;
+}
+
+.r_battleship {
+	background-position: -5px -36px;
+	width: 98px;
+	height: 23px;
+}
+
+.r_carrier {
+	background-position: -5px -140px;
 	width: 167px;
-	height: 38px;*/
+	height: 38px;
 }
 
-.ship {
-	background-color: steelblue;
+.u_destroyer {
+	background-position: -24px -322px;
+	width: 20px;
+	height: 61px;
 }
 
-.sprites {
-	background: url('../public/Battleship_Pack.PNG');
+.u_submarine {
+	background-position: -54px -285px;
+	width: 23px;
+	height: 98px;
+}
+
+.u_cruiser {
+	background-position: -83px -291px;
+	width: 25px;
+	height: 92px;
+}
+
+.u_battleship {
+	background-position: -115px -244px;
+	width: 27px;
+	height: 139px;
+}
+
+.u_carrier {
+	background-position: -158px -216px;
+	width: 38px;
+	height: 167px;
+}
+
+.l_destroyer {
+	background-position: -326px -353px;
+	width: 61px;
+	height: 20px;
+}
+
+.l_submarine {
+	background-position: -289px -320px;
+	width: 98px;
+	height: 23px;
+}
+
+.l_cruiser {
+	background-position: -295px -289px;
+	width: 92px;
+	height: 25px;
+}
+
+.l_battleship {
+	background-position: -248px -255px;
+	width: 139px;
+	height: 27px;
+}
+
+.l_carrier {
+	background-position: -220px -201px;
+	width: 167px;
+	height: 38px;
+}
+
+.d_destroyer {
+	background-position: -220px -201px;
+	width: 167px;
+	height: 38px;
+}
+
+.d_submarine {
+	background-position: -332px -11px;
+	width: 23px;
+	height: 98px;
+}
+
+.d_cruiser {
+	background-position: -301px -11px;
+	width: 25px;
+	height: 92px;
+}
+
+.d_battleship {
+	background-position: -267px -11px;
+	width: 27px;
+	height: 139px;
+}
+
+.d_carrier {
+	background-position: -213px -11px;
+	width: 38px;
+	height: 167px;
 }
