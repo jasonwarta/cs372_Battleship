@@ -6,6 +6,7 @@ PlayerAction = new Mongo.Collection('actions');
 //   row: num, 0-9
 //   col: num, 0-9
 //   action: string, "ship","shot"
+//   userId: alphanumeric string
 // }
 
 CellArray = new Mongo.Collection('cells');
@@ -353,10 +354,7 @@ Meteor.methods({
             } );
 
       }
-
     }
-
-    
 
   },
   'findUser': function(){
