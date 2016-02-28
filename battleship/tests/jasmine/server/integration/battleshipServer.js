@@ -28,45 +28,45 @@ describe('Check ship positions: ', function(){
 
   //top left corner
   it("0,0,horizontal,cruiser",function(){
-    var result = Meteor.call('checkShipPosition',0,0,"horizontal","cruiser");
+    var result = Meteor.call('checkShipPosition',0,0,"horizontal",3);
     expect(result).toEqual("valid position");
   });
 
   it("0,0,vertical,cruiser",function(){
-    var result = Meteor.call('checkShipPosition',0,0,"vertical","cruiser");
+    var result = Meteor.call('checkShipPosition',0,0,"vertical",3);
     expect(result).toEqual("valid position");
   });
 
   //bottom left corner
   it("9,0,horizontal,cruiser",function(){
-    var result = Meteor.call('checkShipPosition',9,0,"horizontal","cruiser");
+    var result = Meteor.call('checkShipPosition',9,0,"horizontal",3);
     expect(result).toEqual("valid position");
   });
 
   it("9,0,vertical,cruiser",function(){
-    var result = Meteor.call('checkShipPosition',9,0,"vertical","cruiser");
+    var result = Meteor.call('checkShipPosition',9,0,"vertical",3);
     expect(result).toEqual("invalid position");
   });
 
   //top right corner
   it("0,9,horizontal,cruiser",function(){
-    var result = Meteor.call('checkShipPosition',0,9,"horizontal","cruiser");
+    var result = Meteor.call('checkShipPosition',0,9,"horizontal",3);
     expect(result).toEqual("invalid position");
   });
 
   it("0,9,vertical,cruiser",function(){
-    var result = Meteor.call('checkShipPosition',0,9,"vertical","cruiser");
+    var result = Meteor.call('checkShipPosition',0,9,"vertical",3);
     expect(result).toEqual("valid position");
   });
 
   //bottom right corner
   it("9,9,horizontal,cruiser",function(){
-    var result = Meteor.call('checkShipPosition',9,9,"horizontal","cruiser");
+    var result = Meteor.call('checkShipPosition',9,9,"horizontal",3);
     expect(result).toEqual("invalid position");
   });
 
   it("9,9,vertical,cruiser",function(){
-    var result = Meteor.call('checkShipPosition',9,9,"vertical","cruiser");
+    var result = Meteor.call('checkShipPosition',9,9,"vertical",3);
     expect(result).toEqual("invalid position");
   });
 });

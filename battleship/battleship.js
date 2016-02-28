@@ -227,29 +227,15 @@ Meteor.methods({
   //posY is the Y position of the cell
   //rotation is in directions "up","left","down","right" from the clicked location
   //ship is a string: "carrier","battleship","cruiser","submarine","destroyer"
-  'checkShipPosition': function(posX,posY,rotation,ship){
-    var ships = {"carrier":5,"battleship":4,"cruiser":3,"submarine":3,"sub":3,"destroyer":2,5:5,4:4,3:3,2:2};
-
-    if(rotation == "up"){
-      if(posY - ships.ship < 0){
-        return "invalid position";
-      } else {
-        return "valid position";
-      };
-    } else if (rotation == "left"){
-      if(posX - ships.ship < 0){
+  'checkShipPosition': function(posX,posY,rotation,shipLength){
+    if (rotation == "vertical"){
+      if(posX + shipLength > 9){
         return "invalid position";
       } else {
         return "valid position";
       }
-    } else if (rotation == "down"){
-      if(posY + ships.ship > 9){
-        return "invalid position";
-      } else {
-        return "valid position";
-      }
-    } else if (rotation == "right"){
-      if(posX + ships.ship > 9){
+    } else if (rotation == "horizontal"){
+      if(posY + shipLength > 9){
         return "invalid position";
       } else {
         return "valid position";
