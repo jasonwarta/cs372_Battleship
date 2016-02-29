@@ -80,7 +80,10 @@ players.
 dynamic updating for mouseover due to extreme lag in both server-side and client-side 
 implementations.  Spent a couple more hours working on lexer.
 
+2016.02.26 Friday
 
+
+2016.02.27 Saturday
 
 
 

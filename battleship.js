@@ -9,7 +9,8 @@ PlayerAction = new Mongo.Collection('actions');
 //   userId: alphanumeric string
 // }
 
-CellArray = new Mongo.Collection('cells');
+FriendlyCellArray = new Mongo.Collection('friendlyCells');
+EnemyCellArray = new Mongo.Collection('enemyCells')
 // {
 //   _id: alphanumeric string
 //   row: num, 0-9
@@ -20,6 +21,58 @@ CellArray = new Mongo.Collection('cells');
 
 //Meteor Client Code
 if (Meteor.isClient) {
+  Template.titlebar.onRendered( function(){
+    
+  });
+
+  Template.titlebar.helpers({
+    'connected': function(){
+      if(Session.get('connected') != "true") return false;
+      else return true;
+    },
+    'enemy': function(){
+      // console.log(Session.get('enemyId'));
+      // Meteor.users.findOne()
+      var email = Meteor.call('getEmailFromID',Session.get('enemyId'))
+      return email;
+    },
+    'mouseStats':function(){
+      return Session.get('mouseStats');
+    }
+
+  });
+
+  Template.titlebar.events({
+    'submit form': function(event){
+      event.preventDefault();
+      var email = event.target.enemyEmail.value;
+
+      var userId = Meteor.userId();
+      var userEmail = Meteor.call('getEmailFromID',userId);
+      var enemyId = Meteor.call('getIDFromEmail',email);
+      var enemyEmail = Meteor.call('getEmailFromID',enemyId);
+
+      console.log("userId: "+userId+" email: "+userEmail);
+      console.log("enemyId: "+enemyId+" email: "+enemyEmail);
+
+      if(enemyId){
+        if(userId == enemyId){
+          Session.set('connected',"false");
+        } else if(enemyId == ""){
+          Session.set('connected',"false");
+        } else {
+          Session.set('enemyId',enemyId);
+          Session.set('connected',"true");
+        }
+      }
+    },
+
+  });
+
+
+
+
+
   Template.game.onRendered( function(){
     
     Meteor.call('initCellArray');
@@ -28,9 +81,12 @@ if (Meteor.isClient) {
     //session var to track state of rotation
     //changed by clicking 'rotate' button
     //starts at "down"
-    Session.set('rotation',"down");
+    Session.set('rotation',"vertical");
     Session.set('gameMode','init'); // 'init','placing','waiting','shooting','done'
     Session.set('selectedShip', 'none'); //'carrier', etc
+    // console.log("userId: " + Meteor.call('findUser',"test2@test.com"));
+    Session.set('enemyId','');
+    Session.set('connected',false);
   });
 
   Template.game.helpers({
@@ -43,8 +99,11 @@ if (Meteor.isClient) {
         return false; 
       }
     },
-    'cell': function(){
-      return CellArray.find();
+    'friendlyCell': function(){
+      return FriendlyCellArray.find();
+    },
+    'enemyCell': function(){
+      return EnemyCellArray.find();
     },
     'mouseover': function(){
       var cellId = this._id;
@@ -69,6 +128,7 @@ if (Meteor.isClient) {
     'rotation': function(){
       return Session.get('rotation');
     },
+    
 
   });
 
@@ -121,22 +181,18 @@ if (Meteor.isClient) {
       //rotation happens clockwise, starting at down
       var state = Session.get('rotation');
 
-      if(state == "down") Session.set('rotation','left');
-      else if(state == "left") Session.set('rotation','up');
-      else if(state == "up") Session.set('rotation','right');
-      else if(state == "right") Session.set('rotation','down');
-      else Session.set('rotation','down');
+      if(state == "vertical") Session.set('rotation','horizontal');
+      else if (state == "horizontal") Session.set('rotation','vertical');
+      // else Session.set('rotation','vertical');
     },
 
     'keyup': function(event) {
       if(event.which == 82){
         var state = Session.get('rotation');
-      
-        if(state == "down") Session.set('rotation','left');
-        else if(state == "left") Session.set('rotation','up');
-        else if(state == "up") Session.set('rotation','right');
-        else if(state == "right") Session.set('rotation','down');
-        else Session.set('rotation','down');
+
+        if(state == "vertical") Session.set('rotation','horizontal');
+        else if (state == "horizontal") Session.set('rotation','vertical');
+        // else Session.set('rotation','vertical');
       }
     },
 
@@ -148,11 +204,13 @@ if (Meteor.isClient) {
       Session.set('posX',$(this).attr('row'));
       Session.set('posY',$(this).attr('col'));
 
-      console.log(Session.get('gameMode') + " " +
-                  Session.get('selectedShip') + " " +
-                  Session.get('posX') + " " + 
-                  Session.get('posY') + " " + 
-                  Session.get('rotation') );
+      Session.set(
+        'mouseStats',
+        Session.get('gameMode') + " " +
+        Session.get('selectedShip') + " " +
+        Session.get('posX') + " " + 
+        Session.get('posY') + " " + 
+        Session.get('rotation'));
     },
 
     'mouseleave .friendly': function() {
@@ -165,22 +223,6 @@ if (Meteor.isClient) {
     'mousemove': function(e){
       if(Session.get('gameMode') == 'placing'){
 
-        var ship = Session.get('selectedShip')
-        // var ships = ["carrier", "destroyer", "cruiser", 
-        //   "submarine", "battleship"]; 
-
-        var rotation = Session.get('rotation');
-        //delete former classes if user has clicked on any 
-          //(ex: switched carrier to sub)
-        var angle = {
-          down: "90deg",
-          left: "180deg",
-          up: "270deg",
-          right: "0deg",
-        }
-
-        $('#shipPack').removeClass();
-
         //follows mouse, but gives space for mouse to click
         $("#friendlyBoard").mousemove(function(e){
           //change offset according to rotation
@@ -189,25 +231,8 @@ if (Meteor.isClient) {
             top: e.pageY + 3
           }); 
         });
-          //add the appropriate sprite class for width,height,etc
-          if(rotation=="up"){
-            var rotationClass = "u-"; 
-            $('#shipPack').css({
-              left: e.pageX - 40, //width for every ship to be on left
-              top: e.pageY -30,
-            }); 
-          }
-          else if(rotation=="down"){
-            var rotationClass = "d-"; 
-          }
-          else if(rotation=="left"){
-            var rotationClass = "l-"; 
-          }
-          else{
-            var rotationClass = "r-";  
-          }
         
-        $('#shipPack').addClass(rotationClass + ship); 
+        $('#shipPack').addClass(Session.get('rotation') + "-" + Session.get('selectedShip')); 
        }
     }
   });
@@ -226,7 +251,7 @@ Meteor.methods({
   //posX is the X position of the cell
   //posY is the Y position of the cell
   //rotation is in directions "up","left","down","right" from the clicked location
-  //ship is a string: "carrier","battleship","cruiser","submarine","destroyer"
+  //shipLength is the length of the ship 2-5
   'checkShipPosition': function(posX,posY,rotation,shipLength){
     if (rotation == "vertical"){
       if(posX + shipLength > 9){
@@ -246,10 +271,20 @@ Meteor.methods({
   },
 
   'initCellArray': function(){
-    CellArray.remove({});
+    FriendlyCellArray.remove({});
     for(var i = 0; i < 10; i++){
       for(var j = 0; j < 10; j++){
-        CellArray.insert({
+        FriendlyCellArray.insert({
+          row: i,
+          col: j,
+          state: "empty"
+        });
+      }
+    }
+    EnemyCellArray.remove({});
+    for(var i = 0; i < 10; i++){
+      for(var j = 0; j < 10; j++){
+        EnemyCellArray.insert({
           row: i,
           col: j,
           state: "empty"
@@ -263,28 +298,9 @@ Meteor.methods({
 
     if(Meteor.call('checkShipPosition',posX,posY,rotation,shipLength) == "valid position"){
 
-      if (rotation == "left"){
-      
-        CellArray.update(
-          { '$and': [ 
-            { col: {'$gt': posY-shipLength, } },
-            { col: {'$lte': posY } }, 
-            { row: posX } 
-          ] },
-          { '$set': 
-            { state: "ship"} 
-          },
-          { 
-            upsert: false,
-            multi: true 
-          }, 
-            function(error){
-              if(error) console.log(error);
-            } );
-
-      } else if (rotation == "right") {
+      if (rotation == "horizontal") {
         
-        CellArray.update(
+        FriendlyCellArray.update(
           { '$and': [ 
             { col: {'$gte': posY, } },
             { col: {'$lt': posY+shipLength } }, 
@@ -301,28 +317,9 @@ Meteor.methods({
               if(error) console.log(error);
             } );
 
-      } else if (rotation == "up") {
-
-        CellArray.update(
-          { '$and': [ 
-            { row: {'$gt': posX-shipLength, } },
-            { row: {'$lte': posX } }, 
-            { col: posY } 
-          ] },
-          { '$set': 
-            { state: "ship"} 
-          },
-          { 
-            upsert: false,
-            multi: true 
-          }, 
-            function(error){
-              if(error) console.log(error);
-            } );
-
-      } else if (rotation == "down") {
+      } else if (rotation == "vertical") {
         
-        CellArray.update(
+        FriendlyCellArray.update(
           { '$and': [ 
             { row: {'$gte': posX, } },
             { row: {'$lt': posX+shipLength } }, 
@@ -340,13 +337,32 @@ Meteor.methods({
             } );
 
       }
+    } else {
+      console.log("invalid position");
     }
 
   },
-  'findUser': function(){
-    return Meteor.users.find(("email"));
-  },
+  'getIDFromEmail': function(email){
+    var doc = Meteor.users.findOne({"emails.address": email},{});
+    var userId = null;
+    if(doc){
+      userId = doc._id;
+    }
+    console.log("EMailtoID - ID: "+userId+" Email: "+email);
+    return userId;
 
+    // return Meteor.users.findOne({ "emails.address": email})._id;
+    // // Accounts.findUserByEmail(email);
+  },
+  'getEmailFromID': function(id){
+    var doc = Meteor.users.findOne({"_id": id},{});
+    var email = null;
+    if(doc){
+      email = doc.emails[0].address;
+    }
+    console.log("IDtoEMail - ID: "+id+" Email: "+email);
+    return email;
+  },
 
 
 });
