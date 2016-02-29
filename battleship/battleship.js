@@ -191,10 +191,10 @@ if (Meteor.isClient) {
           //add the appropriate sprite class for width,height,etc
           if(rotation=="up"){
             var rotationClass = "u-"; 
-            $('#shipPack').css({
-              left: e.pageX - 40, //width for every ship to be on left
-              top: e.pageY -30,
-            }); 
+            // $('#shipPack').css({
+            //   left: e.pageX - 40, //width for every ship to be on left
+            //   top: e.pageY -30,
+            // }); 
           }
           else if(rotation=="down"){
             var rotationClass = "d-"; 
