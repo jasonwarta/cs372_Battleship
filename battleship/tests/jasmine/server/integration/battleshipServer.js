@@ -24,46 +24,49 @@ describe('Connecting to users: ', function(){
 
 
 
-describe('Placing Ships: ', function(){
+describe('Check ship positions: ', function(){
 
-  it("0,0,up,carrier", function(){
-    var result = Meteor.call('checkShipPosition',0,0,"up","carrier");
+  //top left corner
+  it("0,0,horizontal,cruiser",function(){
+    var result = Meteor.call('checkShipPosition',0,0,"horizontal",3);
     expect(result).toEqual("valid position");
   });
 
-  it("0,0,left,carrier", function(){
-    var result = Meteor.call('checkShipPosition',0,0,"left","carrier");
+  it("0,0,vertical,cruiser",function(){
+    var result = Meteor.call('checkShipPosition',0,0,"vertical",3);
     expect(result).toEqual("valid position");
   });
 
-  it("9,0,down,carrier", function(){
-    var result = Meteor.call('checkShipPosition',9,0,"down","carrier");
+  //bottom left corner
+  it("9,0,horizontal,cruiser",function(){
+    var result = Meteor.call('checkShipPosition',9,0,"horizontal",3);
     expect(result).toEqual("valid position");
   });
 
-  it("0,9,right,carrier", function(){
-    var result = Meteor.call('checkShipPosition',0,9,"right","carrier");
+  it("9,0,vertical,cruiser",function(){
+    var result = Meteor.call('checkShipPosition',9,0,"vertical",3);
+    expect(result).toEqual("invalid position");
+  });
+
+  //top right corner
+  it("0,9,horizontal,cruiser",function(){
+    var result = Meteor.call('checkShipPosition',0,9,"horizontal",3);
+    expect(result).toEqual("invalid position");
+  });
+
+  it("0,9,vertical,cruiser",function(){
+    var result = Meteor.call('checkShipPosition',0,9,"vertical",3);
     expect(result).toEqual("valid position");
   });
 
-  it("0,0,up,destroyer", function(){
-    var result = Meteor.call('checkShipPosition',0,0,"up","destroyer");
-    expect(result).toEqual("valid position");
+  //bottom right corner
+  it("9,9,horizontal,cruiser",function(){
+    var result = Meteor.call('checkShipPosition',9,9,"horizontal",3);
+    expect(result).toEqual("invalid position");
   });
 
-  it("0,0,left,destroyer", function(){
-    var result = Meteor.call('checkShipPosition',0,0,"left","destroyer");
-    expect(result).toEqual("valid position");
+  it("9,9,vertical,cruiser",function(){
+    var result = Meteor.call('checkShipPosition',9,9,"vertical",3);
+    expect(result).toEqual("invalid position");
   });
-
-  it("9,0,down,destroyer", function(){
-    var result = Meteor.call('checkShipPosition',9,0,"down","destroyer");
-    expect(result).toEqual("valid position");
-  });
-
-  it("0,9,right,destroyer", function(){
-    var result = Meteor.call('checkShipPosition',0,9,"right","destroyer");
-    expect(result).toEqual("valid position");
-  });
-
 });

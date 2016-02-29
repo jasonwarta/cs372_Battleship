@@ -8,12 +8,31 @@
   	{{> game }}
   {{/if}}
 </body>
+
+
 <template name="titlebar" class="titlebar">
 	<ul id="nav" style="margin:0;">
 		<li style="font-size:1.2em;font-weight:bold;">Battleship</li>
 		<li> {{> loginButtons align="left"}} </li>
+		{{#if currentUser}}
+			{{#if connected}}
+				<li>Connected to: {{enemy}}</li>
+			{{else}}
+				<li>
+					<form class="connect">
+						<input type="text" name="enemyEmail">
+						<input type="submit" value="Find Player">
+					</form>
+				</li>
+			{{/if}}
+		{{/if}}
+
+		<ul class="status">
+			<li>{{mouseStats}}</li>
+		</ul>
 	</ul>
 </template>
+
 
 <template name="game" class="game">
 	<div class="gameContainer">
@@ -33,7 +52,7 @@
 		<div class="board" id="leftBoard">
 			<h2 class="label" id="friendly">My ships</h2>
 			<div class="gridContainer" id="friendlyBoard">
-				{{#each cell}}
+				{{#each friendlyCell}}
 					<div class="cell friendly {{mouseover}} x{{row}} y{{col}} {{state}}"></div>
 				{{/each}}
 			</div>
@@ -43,7 +62,7 @@
 		<div class="board" id="rightBoard">
 			<h2 class="label" id="enemy">Enemy ships</h2>
 			<div class="gridContainer" id="enemyBoard">
-				{{#each cell}}
+				{{#each enemyCell}}
 					<div class="cell enemy x{{row}} y{{col}} {{state}}"></div>
 				{{/each}}
 			</div>
@@ -70,5 +89,6 @@
 	{{/if}}
 
 </template>
+
 
 
