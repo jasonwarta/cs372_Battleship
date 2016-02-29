@@ -214,3 +214,6 @@ Template.game.events({
      }
   }
 });
+
+// Meteor.subscribe('friendlyCells');
+// Meteor.subscribe('enemyCells');
