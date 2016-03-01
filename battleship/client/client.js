@@ -96,7 +96,23 @@ Template.game.helpers({
         }
       }
     } else if(Session.get('gameMode') == 'placing'){
+      var posX = Session.get('posX');
+      var posY = Session.get('posY');
+      var rotation = Session.get('rotation');
+      var ship = Session.get('selectedShip');
+      var shipLength = Session.get('shipLength');
 
+      if(Meteor.call('checkShipPosition',posX,posY,rotation,shipLength) == "valid position"){
+        $('#shipPack').css({
+          visibility: "hidden"
+        });
+        var shipString = ".SS"+ship;
+        $(shipString).css({
+          visibility: "hidden"
+        });
+        Meteor.call('placeShip',posX,posY,rotation,shipLength);
+        Session.set('selectedShip',null);
+      }
 
     } else if(Session.get('gameMode') == 'shooting'){
 
@@ -106,6 +122,9 @@ Template.game.helpers({
   'rotation': function(){
     return Session.get('rotation');
   },
+  'hidden': function(){
+    
+  }
   
 
 });
@@ -122,11 +141,7 @@ Template.game.events({
     var ship = Session.get('selectedShip');
     var shipLength;
 
-    if(ship == "carrier") shipLength = 5;
-    else if(ship == "battleship") shipLength = 4;
-    else if(ship == "cruiser") shipLength = 3;
-    else if(ship == "submarine") shipLength = 3;
-    else if(ship == "destroyer") shipLength = 2;
+    
 
 
     console.log("you clicked " + Session.get('posX') + " " + Session.get('posY') + " " + ship);
@@ -136,7 +151,7 @@ Template.game.events({
         Session.get('posX'),
         Session.get('posY'),
         Session.get('rotation'),
-        shipLength
+        Session.get('shipLength')
       );
     }
 
@@ -150,6 +165,15 @@ Template.game.events({
     var ship = $(e.currentTarget).attr("id");
     Session.set('gameMode', 'placing'); 
     Session.set('selectedShip', ship); 
+    var shipLength;
+
+    if(ship == "carrier") shipLength = 5;
+    else if(ship == "battleship") shipLength = 4;
+    else if(ship == "cruiser") shipLength = 3;
+    else if(ship == "submarine") shipLength = 3;
+    else if(ship == "destroyer") shipLength = 2;
+
+    Session.set('shipLength',shipLength);
 
     console.log( Session.get('gameMode') + " " + Session.get('selectedShip') );
   },
@@ -201,12 +225,15 @@ Template.game.events({
   'mousemove': function(e){
     if(Session.get('gameMode') == 'placing'){
 
+      $("#shipPack").removeClass();
+
       //follows mouse, but gives space for mouse to click
       $("#friendlyBoard").mousemove(function(e){
         //change offset according to rotation
         $('#shipPack').css({
           left: e.pageX + 3, 
-          top: e.pageY + 3
+          top: e.pageY + 3,
+          visibility: "visible",
         }); 
       });
       
