@@ -35,6 +35,17 @@ Meteor.methods({
     }
   },
 
+  'noShipPresent': function(posX,posY,rotation,shipLength){
+    var ships = FriendlyCellArray.find({state:"ship"}).fetch();
+
+    if(rotation == "horizontal"){
+      
+    } else if (rotation == "vertical"){
+
+    }
+
+  },
+
   'initCellArray': function(){
     FriendlyCellArray.remove({});
     for(var i = 0; i < 10; i++){
@@ -82,6 +93,15 @@ Meteor.methods({
               if(error) console.log(error);
             } );
 
+        PlayerAction.insert({
+           row: posX,
+           col: posY,
+           action: "ship",
+           rotation: rotation,
+           shipLength: shipLength,
+           userId: this.userId()
+        });
+
       } else if (rotation == "vertical") {
         
         FriendlyCellArray.update(
@@ -100,6 +120,15 @@ Meteor.methods({
             function(error){
               if(error) console.log(error);
             } );
+
+        PlayerAction.insert({
+           row: posX,
+           col: posY,
+           action: "ship",
+           rotation: rotation,
+           shipLength: shipLength,
+           userId: this.userId()
+        });
 
       }
     } else {

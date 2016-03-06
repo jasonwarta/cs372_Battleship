@@ -1,3 +1,6 @@
+// placedShips = {};
+
+
 
 Template.titlebar.onRendered( function(){
   
@@ -123,7 +126,8 @@ Template.game.helpers({
     return Session.get('rotation');
   },
   'hidden': function(){
-    
+    // if()
+    return "hidePlacedShip";
   }
   
 
