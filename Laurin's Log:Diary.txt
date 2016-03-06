@@ -26,3 +26,9 @@ mouse, but is not in the way of the mouse.
 Realized I wasn't diarying like I should have been. Peeked at Jason's (though not throughly for privacy) to see how much he wrote. Everyday. He wrote something everyday. I hope I get a good grade on this anyway. Right now, it's 10:46 PM. I'm going through completing deliverables for our presentation tomorrow. I now have a document to hold them all, though they are not completed yet. The requirements document is completed, as well as some code working, both tests and source. Our diaries are in use, our user documentation template on the repo, as well as the design document template that I still need to fill out. Been working on this for an hour now. Going to push. 
 
 And oh, changed our .rtf files to .txt file for more universal use. Decided our documents should be pdf's when they are completed. Like the requirement doc.
+
+2-29-16
+Leap Year Day! Yea! Today I worked on getting the ship images to stay on the grid. I did a quick workaround just using a global array, though I have a feeling I'll need to switch it to a mongo collection instead. Did code review in class, feel like that's one of the topics I actually have more of a hold on. My documentation skills need work. Which reminds me, the requirements document is done, working on the design and User documentation now. 
+
+3-4-16
+Need to work on documentation! But I had a midterm this week! I want this project to be completed fully so baD! Days ago I stayed up for about 2 hours snapping the ships to the grid. It wasn't a very good solution because I had to use absolute page positioning to get them where I wanted them. They show up where I click on the grid, but maybe they don't only show up there? I found a bug though. When I scroll down the ships are no longer on the grid. I need to find a way to have the ships position relative to the grid itself. It's going to be work though to get that and the mouse following to work together. 
