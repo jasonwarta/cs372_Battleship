@@ -127,7 +127,7 @@ Template.game.helpers({
   },
   'hidden': function(){
     // if()
-    return "hidePlacedShip";
+    // return "hidePlacedShip";
   }
   
 

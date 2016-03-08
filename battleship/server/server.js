@@ -39,7 +39,7 @@ Meteor.methods({
     var ships = FriendlyCellArray.find({state:"ship"}).fetch();
 
     if(rotation == "horizontal"){
-      
+
     } else if (rotation == "vertical"){
 
     }
@@ -99,7 +99,7 @@ Meteor.methods({
            action: "ship",
            rotation: rotation,
            shipLength: shipLength,
-           userId: this.userId()
+           userId: Meteor.userId()
         });
 
       } else if (rotation == "vertical") {
