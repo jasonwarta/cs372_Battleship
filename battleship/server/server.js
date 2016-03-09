@@ -1,23 +1,3 @@
-PlayersList = new Mongo.Collection('players'); 
-BoardData = new Mongo.Collection('board');
-PlayerAction = new Mongo.Collection('actions');
-// {
-//   _id: alphanumeric string
-//   row: num, 0-9
-//   col: num, 0-9
-//   action: string, "ship","shot"
-//   userId: alphanumeric string
-// }
-
-FriendlyCellArray = new Mongo.Collection('friendlyCells');
-EnemyCellArray = new Mongo.Collection('enemyCells'); 
-// {
-//   _id: alphanumeric string
-//   row: num, 0-9
-//   col: num, 0-9
-//   state: string, "empty","ship"
-// }
-
 Meteor.startup(function () {
 
 });
@@ -147,7 +127,7 @@ Meteor.methods({
            action: "ship",
            rotation: rotation,
            shipLength: shipLength,
-           userId: this.userId()
+           userId: this.userId(),
         });
 
       }
@@ -183,6 +163,14 @@ Meteor.methods({
   },
   'getEnemyCells': function(){
     return EnemyCellArray.find();
+  },
+  'shoot': function(posX,posY){
+    PlayerAction.insert({
+      row:posX,
+      col:posY,
+      action:"shot",
+      userId: this.userId(),
+    });
   },
 
 

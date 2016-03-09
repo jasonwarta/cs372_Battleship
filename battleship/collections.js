@@ -1,4 +1,4 @@
-PlayersList = new Mongo.Collection('players'); 
+// PlayersList = new Mongo.Collection('players'); 
 BoardData = new Mongo.Collection('board');
 PlayerAction = new Mongo.Collection('actions');
 // {

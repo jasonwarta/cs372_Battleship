@@ -1,13 +1,3 @@
-FriendlyCellArray = new Mongo.Collection('friendlyCells');
-EnemyCellArray = new Mongo.Collection('enemyCells'); 
-
-ShipArray = new Mongo.Collection('shipArray');
-//name of ship
-//global coordinates per the page, X,Y
-//image from HTML/element
-//orientation
-//ship Length
-//boolean 'placed' (already placed or not)
 
 var shiparray = ['carrier', 'submarine', 'destroyer', 'cruiser', 'battleship']; 
 
@@ -132,8 +122,13 @@ Template.game.helpers({
       }
 
     } else if(Session.get('gameMode') == 'shooting'){
-
-
+      if(cellId == hoverCell) {
+        if(Session.get('mouseState') == 'enter'){
+          return 'mouseenter';
+        } else {
+          return 'mouseleave';
+        }
+      }
     }  
   },
   'rotation': function(){
@@ -142,7 +137,11 @@ Template.game.helpers({
   'hidden': function(){
     // if()
     // return "hidePlacedShip";
-  }
+  },
+
+  'shot': function(){
+
+  },
 
   'givenElementReturnProperShipPlacement': function(elem){
     var ship = Session.get('selectedShip');
@@ -209,8 +208,8 @@ Template.game.helpers({
         X,
         Y
       );
+    }
   }
-}
 });
 
 Template.game.events({
@@ -276,6 +275,16 @@ Template.game.events({
     }
   },
 
+  'click .enemy': function(e){
+    if(Session.get('gameMode')=="shooting"){
+      Meteor.call('shoot',
+        Session.get('posX'),
+        Session.get('posY')
+      );
+    }
+  },
+
+
   //ship placement handlers
   'click .shipSelector': function(e){
     var ship = $(e.currentTarget).attr("id");
@@ -316,6 +325,7 @@ Template.game.events({
 
   //mouseover handlers for friendly cells
   'mouseenter .friendly': function(e) {
+
     var cellId = this._id;
     Session.set('mouseState','enter');
     Session.set('enterCell',cellId);
@@ -329,6 +339,8 @@ Template.game.events({
       Session.get('posX') + " " + 
       Session.get('posY') + " " + 
       Session.get('rotation'));
+
+    // if(Session.get('gameMode') == "")
   },
 
   'mouseleave .friendly': function() {
@@ -357,170 +369,3 @@ Template.game.events({
      }
   }
 });
-
-
-//Meteor Methods
-Meteor.methods({
-
-  //posX is the X position of the cell
-  //posY is the Y position of the cell
-  //rotation is in directions "up","left","down","right" from the clicked location
-  //shipLength is the length of the ship 2-5
-  'checkShipPosition': function(posX,posY,rotation,shipLength){
-    if (rotation == "vertical"){
-      if(posX + shipLength > 9){
-        return "invalid position";
-      } else {
-        return "valid position";
-      }
-    } else if (rotation == "horizontal"){
-      if(posY + shipLength > 9){
-        return "invalid position";
-      } else {
-        return "valid position";
-      }
-    } else {
-      return "invalid position";
-    }
-  },
-
-  'initCellArray': function(){
-    console.log("in initCellArray"); 
-    FriendlyCellArray.remove({});
-    for(var i = 0; i < 10; i++){
-      for(var j = 0; j < 10; j++){
-        FriendlyCellArray.insert({
-          row: i,
-          col: j,
-          state: "empty"
-        });
-      }
-    }
-    EnemyCellArray.remove({});
-    for(var i = 0; i < 10; i++){
-      for(var j = 0; j < 10; j++){
-        EnemyCellArray.insert({
-          row: i,
-          col: j,
-          state: "empty"
-        });
-      }
-    }
-  },
-
-
-  'placeShip': function(posX,posY,rotation,shipLength,shipX,shipY){
-
-    if(Meteor.call('checkShipPosition',posX,posY,rotation,shipLength) == "valid position"){
-
-      if (rotation == "horizontal") {
-        
-        FriendlyCellArray.update(
-          { '$and': [ 
-            { col: {'$gte': posY, } },
-            { col: {'$lt': posY+shipLength } }, 
-            { row: posX } 
-          ] },
-          { '$set': 
-            { state: "ship"} 
-          },
-          { 
-            upsert: false,
-            multi: true 
-          }, 
-            function(error){
-              if(error) console.log(error);
-            } 
-        );
-
-        //Place the chosen ship at the given coordinates//////////////////////////////
-        var ship = Session.get('selectedShip'); 
-        if(shiparray[0])
-        $('#'+ ship + "_img").addClass(Session.get('rotation') + "-" + ship);
-        $('#' + ship + "_img").css({
-          left: shipX,
-          top: shipY
-        }); 
-        console.log("placing ship at" + posX + "and, " + posY); 
-
-        //Put the ship in the array/collection
-        ShipArray.collection.insert({
-          name: ship,
-          x_value : shipX,
-          y_value : shipY,
-          image : ship + "_img",
-          image_source : "battleship_sprites_empty.png",
-          rotation: Session.get('rotation'),
-          length : shipLength,
-          placed : true,
-          html_element : document.getElementById(ship + "_img")
-        })
-
-        //name of ship
-//global coordinates per the page, X,Y
-//image from HTML/element
-//orientation
-//ship Length
-//boolean 'placed' (already placed or not)
-
-      } else if (rotation == "vertical") {
-        
-        FriendlyCellArray.update(
-          { '$and': [ 
-            { row: {'$gte': posX, } },
-            { row: {'$lt': posX+shipLength } }, 
-            { col: posY } 
-          ] },
-          { '$set': 
-            { state: "ship"} 
-          },
-          { 
-            upsert: false,
-            multi: true 
-          }, 
-            function(error){
-              if(error) console.log(error);
-            } );
-
-          //Place the chosen ship at the given coordinates//////////////////////////////
-        var ship = Session.get('selectedShip'); 
-        if(shiparray[0])
-        $('#'+ ship + "_img").addClass(Session.get('rotation') + "-" + ship);
-        $('#' + ship + "_img").css({
-          left: shipX,
-          top: shipY
-        }); 
-        console.log("placing ship at" + posX + "and, " + posY); 
-
-      }
-    } else {
-      console.log("invalid position");
-    }
-  },
-  'getIDFromEmail': function(email){
-    var doc = Meteor.users.findOne({"emails.address": email},{});
-    var userId = null;
-    if(doc){
-      userId = doc._id;
-    }
-    console.log("EMailtoID - ID: "+userId+" Email: "+email);
-    return userId;
-
-    // return Meteor.users.findOne({ "emails.address": email})._id;
-    // // Accounts.findUserByEmail(email);
-  },
-  'getEmailFromID': function(id){
-    var doc = Meteor.users.findOne({"_id": id},{});
-    var email = null;
-    if(doc){
-      email = doc.emails[0].address;
-    }
-    console.log("IDtoEMail - ID: "+id+" Email: "+email);
-    return email;
-  },
-
-});
-
-// Meteor.subscribe('friendlyCells');
-// Meteor.subscribe('enemyCells');
-

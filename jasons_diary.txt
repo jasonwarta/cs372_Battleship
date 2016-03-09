@@ -106,11 +106,36 @@ or I could do work without having to put a lot of thought into it.  I spent a
 few hours studying for math midterm test and working on parser.
 
 2016.03.04 Friday
-
+4 hours including class. Worked out some ideas regarding how to match
+players. Concluded that we will have to keep track of the enemy user's
+email because Meteor refuses to return the enemy user's ID from the server
+function call.
 
 2016.03.05 Saturday
+CSC/CCDC review and practice. Completed parser for cs331, passing almost
+all tests.
 
+2016.03.06 Sunday
+Did some troubleshooting on parser, didn't arrive at any conclusions about
+why the tests were failing.
 
+2016.03.07 Monday
+1.5 hours.  Studied the problem of matchmaking some more, and wrote down some
+ideas about how the game shot tracking could go together.
+
+2016.03.08 Tuesday
+5 hours. Realized we would need a much more intricate system for tracking user
+sessions and turns, so I read a bunch of stackoverflow questions and multiple
+projects worth of source code looking for a good solution.  didn't find much of
+anything useful, so I wrote the code to track player shots.
+
+	The game is suffering from a type of feature creep resulting from the
+	the developers discovering facets of the language and framework that 
+	have the potential to drastically reduce work and improve the game, after
+	the parts of the game that could utilize said features have long since been
+	written. This impacts the moral of the developers, as they realize that 
+	parts of the code could be either re-written entirely, or written crudely
+	utilizing mismatched techniques.
 
 
 
