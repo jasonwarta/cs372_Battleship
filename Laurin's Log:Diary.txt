@@ -32,3 +32,13 @@ Leap Year Day! Yea! Today I worked on getting the ship images to stay on the gri
 
 3-4-16
 Need to work on documentation! But I had a midterm this week! I want this project to be completed fully so baD! Days ago I stayed up for about 2 hours snapping the ships to the grid. It wasn't a very good solution because I had to use absolute page positioning to get them where I wanted them. They show up where I click on the grid, but maybe they don't only show up there? I found a bug though. When I scroll down the ships are no longer on the grid. I need to find a way to have the ships position relative to the grid itself. It's going to be work though to get that and the mouse following to work together. 
+
+Finished the design documentation-6:19PM. Yea!
+
+3-5-16 & 3-6-16
+Didn't work on battleship over the weekend, but I did push through other assignments from other classes to clear time to work on battleship.
+
+3-7-16
+Finished the User Guide! Whoo! That should be the last of all the documentation. 
+
+

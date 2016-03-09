@@ -22,6 +22,13 @@ Meteor.startup(function () {
 
 });
 
+// Meteor.publish('friendlyCells', function(){
+//   return FriendlyCellArray.find();
+// });
+
+// Meteor.publish('enemyCells', function(){
+//   return EnemyCellArray.find();
+// });
 
 //Meteor Methods
 Meteor.methods({
@@ -46,6 +53,17 @@ Meteor.methods({
     } else {
       return "invalid position";
     }
+  },
+
+  'noShipPresent': function(posX,posY,rotation,shipLength){
+    var ships = FriendlyCellArray.find({state:"ship"}).fetch();
+
+    if(rotation == "horizontal"){
+
+    } else if (rotation == "vertical"){
+
+    }
+
   },
 
   'initCellArray': function(){
@@ -95,6 +113,15 @@ Meteor.methods({
               if(error) console.log(error);
             } );
 
+        PlayerAction.insert({
+           row: posX,
+           col: posY,
+           action: "ship",
+           rotation: rotation,
+           shipLength: shipLength,
+           userId: Meteor.userId()
+        });
+
       } else if (rotation == "vertical") {
         
         FriendlyCellArray.update(
@@ -113,6 +140,15 @@ Meteor.methods({
             function(error){
               if(error) console.log(error);
             } );
+
+        PlayerAction.insert({
+           row: posX,
+           col: posY,
+           action: "ship",
+           rotation: rotation,
+           shipLength: shipLength,
+           userId: this.userId()
+        });
 
       }
     } else {
@@ -142,4 +178,13 @@ Meteor.methods({
     return email;
   },
 
+  'getFriendlyCells': function(){
+    return FriendlyCellArray.find();
+  },
+  'getEnemyCells': function(){
+    return EnemyCellArray.find();
+  },
+
+
 });
+

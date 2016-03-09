@@ -247,3 +247,11 @@ body {
 	width: 38px;
 	height: 167px;
 }
+
+.hit {
+	background-color: red !important;
+}
+
+.miss {
+	background-color: grey !important;
+}

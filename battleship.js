@@ -231,25 +231,10 @@ if (Meteor.isClient) {
             top: e.pageY + 3
           }); 
         });
-          //add the appropriate sprite class for width,height,etc
-          if(rotation=="up"){
-            var rotationClass = "u-"; 
-            // $('#shipPack').css({
-            //   left: e.pageX - 40, //width for every ship to be on left
-            //   top: e.pageY -30,
-            // }); 
-          }
-          else if(rotation=="down"){
-            var rotationClass = "d-"; 
-          }
-          else if(rotation=="left"){
-            var rotationClass = "l-"; 
-          }
-          else{
-            var rotationClass = "r-";  
-          }
         
+        $('#shipPack').removeClass(); 
         $('#shipPack').addClass(Session.get('rotation') + "-" + Session.get('selectedShip')); 
+        console.log(Session.get('rotation') + "-" + Session.get('selectedShip')); 
        }
     }
   });
@@ -258,7 +243,6 @@ if (Meteor.isClient) {
 //Meteor Server Code
 if (Meteor.isServer) {
   Meteor.startup(function () {
-
   });
 }
 

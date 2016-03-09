@@ -81,9 +81,36 @@ dynamic updating for mouseover due to extreme lag in both server-side and client
 implementations.  Spent a couple more hours working on lexer.
 
 2016.02.26 Friday
-
+4 hours including in-class.  
 
 2016.02.27 Saturday
+CSC club mtg for 4.5 hours.
+
+2016.02.28 Sunday
+Spent most of day studying math.
+1.5 hrs, wrote and passed new tests for ship positioning
+
+2016.02.29 Monday
+Reorganized directory structure to better allow for multi-file game structure.
+client code (js, css, html) goes in client directory, server code (js) goes in 
+server directory.  collections are declared in a separate .js in the parent 
+directory so both client and server code can see them.
+
+2016.03.01 Tuesday
+2016.03.02 Wednesday
+2016.03.03 Thursday
+Spent a couple hours tinkering with little things on project here and there.
+Didn't get much done on anything these days due to work and being sick.  I 
+guess I should have written down my design ideas so Laurin could work on stuff
+or I could do work without having to put a lot of thought into it.  I spent a 
+few hours studying for math midterm test and working on parser.
+
+2016.03.04 Friday
+
+
+2016.03.05 Saturday
+
+
 
 
 
