@@ -10,7 +10,7 @@ PlayerAction = new Mongo.Collection('actions');
 // }
 
 FriendlyCellArray = new Mongo.Collection('friendlyCells');
-EnemyCellArray = new Mongo.Collection('enemyCells')
+EnemyCellArray = new Mongo.Collection('enemyCells'); 
 // {
 //   _id: alphanumeric string
 //   row: num, 0-9
