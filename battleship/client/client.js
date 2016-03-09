@@ -1,16 +1,6 @@
 FriendlyCellArray = new Mongo.Collection('friendlyCells');
 EnemyCellArray = new Mongo.Collection('enemyCells'); 
-
 ShipArray = new Mongo.Collection('shipArray');
-//name of ship
-//global coordinates per the page, X,Y
-//image from HTML/element
-//orientation
-//ship Length
-//boolean 'placed' (already placed or not)
-
-var shiparray = ['carrier', 'submarine', 'destroyer', 'cruiser', 'battleship']; 
-
 
 Template.titlebar.onRendered( function(){
   
@@ -63,8 +53,11 @@ Template.titlebar.events({
 $(window).on("load resize scroll", function(){
 
   //Loop through ship array to put ships in correct location
-  ShipArray.find(); 
-  givenElementReturnProperShipPlacement(); 
+  for(var i=0; i<5; ++i){
+    console.log(ShipArray.find({})); 
+    //givenElementReturnProperShipPlacement();
+  }
+   
 }); 
 
 Template.game.onRendered( function(){
@@ -142,7 +135,7 @@ Template.game.helpers({
   'hidden': function(){
     // if()
     // return "hidePlacedShip";
-  }
+  },
 
   'givenElementReturnProperShipPlacement': function(elem){
     var ship = Session.get('selectedShip');
@@ -435,7 +428,6 @@ Meteor.methods({
 
         //Place the chosen ship at the given coordinates//////////////////////////////
         var ship = Session.get('selectedShip'); 
-        if(shiparray[0])
         $('#'+ ship + "_img").addClass(Session.get('rotation') + "-" + ship);
         $('#' + ship + "_img").css({
           left: shipX,
@@ -484,7 +476,6 @@ Meteor.methods({
 
           //Place the chosen ship at the given coordinates//////////////////////////////
         var ship = Session.get('selectedShip'); 
-        if(shiparray[0])
         $('#'+ ship + "_img").addClass(Session.get('rotation') + "-" + ship);
         $('#' + ship + "_img").css({
           left: shipX,
