@@ -1,4 +1,4 @@
-PlayersList = new Mongo.Collection('players'); 
+// PlayersList = new Mongo.Collection('players'); 
 BoardData = new Mongo.Collection('board');
 PlayerAction = new Mongo.Collection('actions');
 // {
@@ -19,3 +19,5 @@ EnemyCellArray = new Mongo.Collection('enemyCells')
 //   col: num, 0-9
 //   state: string, "empty","ship"
 // }
+
+ShipArray = new Mongo.Collection('shipArray');

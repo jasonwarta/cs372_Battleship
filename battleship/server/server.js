@@ -1,22 +1,3 @@
-PlayersList = new Mongo.Collection('players'); 
-BoardData = new Mongo.Collection('board');
-PlayerAction = new Mongo.Collection('actions');
-// {
-//   _id: alphanumeric string
-//   row: num, 0-9
-//   col: num, 0-9
-//   action: string, "ship","shot"
-//   userId: alphanumeric string
-// }
-
-FriendlyCellArray = new Mongo.Collection('friendlyCells');
-EnemyCellArray = new Mongo.Collection('enemyCells'); 
-// {
-//   _id: alphanumeric string
-//   row: num, 0-9
-//   col: num, 0-9
-//   state: string, "empty","ship"
-// }
 
 Meteor.startup(function () {
 
@@ -91,10 +72,8 @@ Meteor.methods({
 
 
   'placeShip': function(posX,posY,rotation,shipLength){
-
     if(Meteor.call('checkShipPosition',posX,posY,rotation,shipLength) == "valid position"){
-
-      if (rotation == "horizontal") {
+       if (rotation == "horizontal") {
         
         FriendlyCellArray.update(
           { '$and': [ 
@@ -111,16 +90,8 @@ Meteor.methods({
           }, 
             function(error){
               if(error) console.log(error);
-            } );
-
-        PlayerAction.insert({
-           row: posX,
-           col: posY,
-           action: "ship",
-           rotation: rotation,
-           shipLength: shipLength,
-           userId: Meteor.userId()
-        });
+            } 
+        );
 
       } else if (rotation == "vertical") {
         
@@ -140,22 +111,13 @@ Meteor.methods({
             function(error){
               if(error) console.log(error);
             } );
-
-        PlayerAction.insert({
-           row: posX,
-           col: posY,
-           action: "ship",
-           rotation: rotation,
-           shipLength: shipLength,
-           userId: this.userId()
-        });
-
-      }
-    } else {
+      } 
+    }
+    else {
       console.log("invalid position");
     }
-
   },
+
   'getIDFromEmail': function(email){
     var doc = Meteor.users.findOne({"emails.address": email},{});
     var userId = null;
@@ -184,7 +146,22 @@ Meteor.methods({
   'getEnemyCells': function(){
     return EnemyCellArray.find();
   },
-
-
+  'shoot': function(posX,posY){
+    PlayerAction.insert({
+      row:posX,
+      col:posY,
+      action:"shot",
+      userId: this.userId(),
+    });
+  },
+  'removeAllShips': function(){
+    ShipArray.remove({}); 
+  },
+  'getShip': function(shipname){
+    if(ShipArray.find().count() != "0"){
+      console.log("in meteor method: " + ShipArray.find({ship_name: shipname}).fetch()); 
+      return ShipArray.find({ship_name: shipname}).fetch(); 
+    }
+  }
 });
 

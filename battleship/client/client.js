@@ -1,7 +1,3 @@
-FriendlyCellArray = new Mongo.Collection('friendlyCells');
-EnemyCellArray = new Mongo.Collection('enemyCells'); 
-ShipArray = new Mongo.Collection('shipArray');
-
 Template.titlebar.onRendered( function(){
   
 });
@@ -49,19 +45,128 @@ Template.titlebar.events({
   },
 });
 
+//GLOBAL JAVASCRIPT FUNCTIONS
 //When window changes (keep track of new grid coordinates?)
-$(window).on("load resize scroll", function(){
-
+$(window).on("load resize", function(){
+  var shiparray = ['carrier', 'submarine', 'destroyer', 'cruiser', 'battleship']; 
   //Loop through ship array to put ships in correct location
   for(var i=0; i<5; ++i){
-    console.log(ShipArray.find({})); 
-    //givenElementReturnProperShipPlacement();
+    if(ShipArray.find().count() != "0"){
+      //call and refresh the ship image
+      givenElementReturnProperShipPlacement(shiparray[i]);
+    } 
   }
-   
 }); 
+
+//Ships are already placed on screen, refresh their position
+function givenElementReturnProperShipPlacement(shipName){
+    //Ship document from collection (has all the variables!)
+    console.log("ship name is: " + shipName); 
+
+    var ship = Meteor.call('getShip',shipName); 
+    var test = game.shipArray(); 
+    console.log("test: " + test); 
+    
+    var shipImg = document.getElementById(shipName+"_img"); //element of corresponding ship image
+    if(ShipArray.find().count()!="0"){
+      console.log("refreshing ship images, inside, called"); 
+      //get coordinates of cell for placing sprites
+      var cell_el = document.getElementById(ship.cell_element);  
+      var cellId = cell_el.id; 
+      var cell = cell_el.getBoundingClientRect();
+
+      console.log("should be cell top coord: " + cell.top); 
+      
+      //To get offset of viewport
+      var view = document.body.getBoundingClientRect(); 
+      console.log("View's top: "+view.top);
+      console.log("Cell top " + cell.top); 
+      console.log(cell.top-view.top); 
+
+      var topAccounted = (view.top-cell.top)*-1; 
+      var rightAccounted = (view.right-cell.right)*-1; 
+      var leftAccounted = (view.left-cell.left)*-1; 
+
+      //For Vertical Rotation
+      if(Session.get('rotation')=='vertical'){
+        //cell.top boundary + (shiplength*cell.width - height of image)/2
+        // var Y = cell.top + (shipLength*cell.height - shipImg.height)/2; 
+
+        var Y = topAccounted + (shipLength*cell.height - shipImg.height)/2; 
+        console.log("Y of ship pos"+Y); 
+
+        //cell.right boundary - (width of image + (width of cell - width of image)/2)
+        var X = cell.right - (shipImg.width + (cell.width-shipImg.width)/2); 
+
+      }
+      else{
+        //Rotation is Horizontal
+        var Y = topAccounted + (cell.height - shipImg.height)/2; 
+        var X = cell.left + (cell.height*shipLength - shipImg.width)/2; 
+      }
+      
+      Meteor.call('placeShip',
+        Session.get('posX'),
+        Session.get('posY'),
+        Session.get('rotation'),
+        shipLength
+      );
+
+      //Place ship images on client side
+      placeShipImages(Session.get('rotation'),shipLength,X,Y,cellId); 
+    }
+}
+
+function placeShipImages(rotation,shipLength,shipX,shipY, cell_elem_id){
+  var ship = Session.get('selectedShip'); 
+  if (rotation == "horizontal") {
+    //Place the chosen ship at the given coordinates
+    $('#'+ship+"_img").removeClass();  
+    $('#'+ ship + "_img").addClass(Session.get('rotation') + "-" + ship);
+    $('#' + ship + "_img").css({
+      left: shipX,
+      top: shipY
+    }); 
+  }
+  else if(rotation == "vertical"){
+    //Place the chosen ship at the given coordinates
+    $('#'+ship+"_img").removeClass(); 
+    $('#'+ ship + "_img").addClass(Session.get('rotation') + "-" + ship);
+    $('#' + ship + "_img").css({
+      left: shipX,
+      top: shipY
+    }); 
+  }
+  
+  // console.log(ShipArray.find({ qty: {name: ship}}).fetch().ship_name == ship); 
+  // console.log(ShipArray.find({ qty: {name: ship}}).fetch().ship_name);
+  // console.log(ship); 
+  if(ShipArray.find({ qty: {ship_name: ship}}).fetch().ship_name == ship){
+    //if ship is already in the ship array, don't add it
+    console.log("ship already in array"); 
+    //change orientation/update feature j-i-c
+  }
+  else{
+    //put the ship in the array/collection
+    console.log("adding : " + ship + " to array"); 
+    ShipArray.insert({
+          ship_name: ship,
+          x_value : shipX,
+          y_value : shipY,
+          image : ship + "_img",
+          image_source : "battleship_sprites_empty.png",
+          rotation: rotation,
+          length : shipLength,
+          placed : true,
+          html_element : document.getElementById(ship + "_img").id,
+          cell_element : cell_elem_id
+        }); 
+  }
+}
 
 Template.game.onRendered( function(){
  
+  Meteor.call('removeAllShips'); 
   Meteor.call('initCellArray');
   var elems = document.getElementsByClassName('rotate');
   elems[0].focus();
@@ -92,6 +197,9 @@ Template.game.helpers({
   },
   'enemyCell': function(){
     return EnemyCellArray.find();
+  },
+  'shipArray': function(){
+    return ShipArray.find(); 
   },
   'mouseover': function(){
     var cellId = this._id;
@@ -125,8 +233,13 @@ Template.game.helpers({
       }
 
     } else if(Session.get('gameMode') == 'shooting'){
-
-
+      if(cellId == hoverCell) {
+        if(Session.get('mouseState') == 'enter'){
+          return 'mouseenter';
+        } else {
+          return 'mouseleave';
+        }
+      }
     }  
   },
   'rotation': function(){
@@ -137,73 +250,11 @@ Template.game.helpers({
     // return "hidePlacedShip";
   },
 
-  'givenElementReturnProperShipPlacement': function(elem){
-    var ship = Session.get('selectedShip');
-    var shipLength;
+  'shot': function(){
 
-    var imgName; 
+  },
 
-    if(ship == "carrier"){
-      shipLength = 5;
-
-    } 
-    else if(ship == "battleship"){
-      shipLength = 4;
-    } 
-    else if(ship == "cruiser"){
-      shipLength = 3;
-    } 
-    else if(ship == "submarine"){
-      shipLength = 3;
-    } 
-    else if(ship == "destroyer"){
-      shipLength = 2;
-    } 
-
-
-    if(Session.get('gameMode') == 'placing'){
-      //get coordinates of cell for placing sprites
-      var cell = elem.target.getBoundingClientRect(); 
-      var shipImg = document.getElementById('shipPack'); 
-
-      //To get offset of viewport
-      var view = document.body.getBoundingClientRect(); 
-      console.log("View's top: "+view.top);
-      console.log("Cell top " + cell.top); 
-      console.log(cell.top-view.top); 
-
-      var topAccounted = (view.top-cell.top)*-1; 
-      var rightAccounted = (view.right-cell.right)*-1; 
-      var leftAccounted = (view.left-cell.left)*-1; 
-
-      //For Vertical Rotation
-      if(Session.get('rotation')=='vertical'){
-        //cell.top boundary + (shiplength*cell.width - height of image)/2
-        // var Y = cell.top + (shipLength*cell.height - shipImg.height)/2; 
-
-        var Y = topAccounted + (shipLength*cell.height - shipImg.height)/2; 
-        console.log("Y of ship pos"+Y); 
-
-        //cell.right boundary - (width of image + (width of cell - width of image)/2)
-        var X = cell.right - (shipImg.width + (cell.width-shipImg.width)/2); 
-
-      }
-      else{
-        //Rotation is Horizontal
-        var Y = topAccounted + (cell.height - shipImg.height)/2; 
-        var X = cell.left + (cell.height*shipLength - shipImg.width)/2; 
-      }
-      
-      Meteor.call('placeShip',
-        Session.get('posX'),
-        Session.get('posY'),
-        Session.get('rotation'),
-        shipLength, 
-        X,
-        Y
-      );
-  }
-}
+  
 });
 
 Template.game.events({
@@ -261,13 +312,23 @@ Template.game.events({
         Session.get('posX'),
         Session.get('posY'),
         Session.get('rotation'),
-        shipLength, 
-        X,
-        Y,
-        Session.get('shipLength')
+        shipLength
+      );
+
+      //Place ship images on client side
+      placeShipImages(Session.get('rotation'),shipLength,X,Y,cellId); 
+    }
+  },
+
+  'click .enemy': function(e){
+    if(Session.get('gameMode')=="shooting"){
+      Meteor.call('shoot',
+        Session.get('posX'),
+        Session.get('posY')
       );
     }
   },
+
 
   //ship placement handlers
   'click .shipSelector': function(e){
@@ -309,6 +370,7 @@ Template.game.events({
 
   //mouseover handlers for friendly cells
   'mouseenter .friendly': function(e) {
+
     var cellId = this._id;
     Session.set('mouseState','enter');
     Session.set('enterCell',cellId);
@@ -322,6 +384,8 @@ Template.game.events({
       Session.get('posX') + " " + 
       Session.get('posY') + " " + 
       Session.get('rotation'));
+
+    // if(Session.get('gameMode') == "")
   },
 
   'mouseleave .friendly': function() {
@@ -350,168 +414,4 @@ Template.game.events({
      }
   }
 });
-
-
-//Meteor Methods
-Meteor.methods({
-
-  //posX is the X position of the cell
-  //posY is the Y position of the cell
-  //rotation is in directions "up","left","down","right" from the clicked location
-  //shipLength is the length of the ship 2-5
-  'checkShipPosition': function(posX,posY,rotation,shipLength){
-    if (rotation == "vertical"){
-      if(posX + shipLength > 9){
-        return "invalid position";
-      } else {
-        return "valid position";
-      }
-    } else if (rotation == "horizontal"){
-      if(posY + shipLength > 9){
-        return "invalid position";
-      } else {
-        return "valid position";
-      }
-    } else {
-      return "invalid position";
-    }
-  },
-
-  'initCellArray': function(){
-    console.log("in initCellArray"); 
-    FriendlyCellArray.remove({});
-    for(var i = 0; i < 10; i++){
-      for(var j = 0; j < 10; j++){
-        FriendlyCellArray.insert({
-          row: i,
-          col: j,
-          state: "empty"
-        });
-      }
-    }
-    EnemyCellArray.remove({});
-    for(var i = 0; i < 10; i++){
-      for(var j = 0; j < 10; j++){
-        EnemyCellArray.insert({
-          row: i,
-          col: j,
-          state: "empty"
-        });
-      }
-    }
-  },
-
-
-  'placeShip': function(posX,posY,rotation,shipLength,shipX,shipY){
-
-    if(Meteor.call('checkShipPosition',posX,posY,rotation,shipLength) == "valid position"){
-
-      if (rotation == "horizontal") {
-        
-        FriendlyCellArray.update(
-          { '$and': [ 
-            { col: {'$gte': posY, } },
-            { col: {'$lt': posY+shipLength } }, 
-            { row: posX } 
-          ] },
-          { '$set': 
-            { state: "ship"} 
-          },
-          { 
-            upsert: false,
-            multi: true 
-          }, 
-            function(error){
-              if(error) console.log(error);
-            } 
-        );
-
-        //Place the chosen ship at the given coordinates//////////////////////////////
-        var ship = Session.get('selectedShip'); 
-        $('#'+ ship + "_img").addClass(Session.get('rotation') + "-" + ship);
-        $('#' + ship + "_img").css({
-          left: shipX,
-          top: shipY
-        }); 
-        console.log("placing ship at" + posX + "and, " + posY); 
-
-        //Put the ship in the array/collection
-        ShipArray.collection.insert({
-          name: ship,
-          x_value : shipX,
-          y_value : shipY,
-          image : ship + "_img",
-          image_source : "battleship_sprites_empty.png",
-          rotation: Session.get('rotation'),
-          length : shipLength,
-          placed : true,
-          html_element : document.getElementById(ship + "_img")
-        })
-
-        //name of ship
-//global coordinates per the page, X,Y
-//image from HTML/element
-//orientation
-//ship Length
-//boolean 'placed' (already placed or not)
-
-      } else if (rotation == "vertical") {
-        
-        FriendlyCellArray.update(
-          { '$and': [ 
-            { row: {'$gte': posX, } },
-            { row: {'$lt': posX+shipLength } }, 
-            { col: posY } 
-          ] },
-          { '$set': 
-            { state: "ship"} 
-          },
-          { 
-            upsert: false,
-            multi: true 
-          }, 
-            function(error){
-              if(error) console.log(error);
-            } );
-
-          //Place the chosen ship at the given coordinates//////////////////////////////
-        var ship = Session.get('selectedShip'); 
-        $('#'+ ship + "_img").addClass(Session.get('rotation') + "-" + ship);
-        $('#' + ship + "_img").css({
-          left: shipX,
-          top: shipY
-        }); 
-        console.log("placing ship at" + posX + "and, " + posY); 
-
-      }
-    } else {
-      console.log("invalid position");
-    }
-  },
-  'getIDFromEmail': function(email){
-    var doc = Meteor.users.findOne({"emails.address": email},{});
-    var userId = null;
-    if(doc){
-      userId = doc._id;
-    }
-    console.log("EMailtoID - ID: "+userId+" Email: "+email);
-    return userId;
-
-    // return Meteor.users.findOne({ "emails.address": email})._id;
-    // // Accounts.findUserByEmail(email);
-  },
-  'getEmailFromID': function(id){
-    var doc = Meteor.users.findOne({"_id": id},{});
-    var email = null;
-    if(doc){
-      email = doc.emails[0].address;
-    }
-    console.log("IDtoEMail - ID: "+id+" Email: "+email);
-    return email;
-  },
-
-});
-
-// Meteor.subscribe('friendlyCells');
-// Meteor.subscribe('enemyCells');
 
