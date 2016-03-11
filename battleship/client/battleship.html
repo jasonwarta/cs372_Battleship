@@ -15,12 +15,13 @@
 		<li style="font-size:1.2em;font-weight:bold;">Battleship</li>
 		<li> {{> loginButtons align="left"}} </li>
 		{{#if currentUser}}
+			<li> Your ID: {{userId}}</li>
 			{{#if connected}}
 				<li>Connected to: {{enemy}}</li>
 			{{else}}
 				<li>
 					<form class="connect">
-						<input type="text" name="enemyEmail">
+						<input type="text" name="enemy">
 						<input type="submit" value="Find Player">
 					</form>
 				</li>
@@ -63,7 +64,7 @@
 			<h2 class="label" id="enemy">Enemy ships</h2>
 			<div class="gridContainer" id="enemyBoard">
 				{{#each enemyCell}}
-					<div class="cell enemy x{{row}} y{{col}} {{state}} {{shot}}"></div>
+					<div class="cell enemy x{{row}} y{{col}} {{state}}"></div>
 				{{/each}}
 			</div>
 		</div>

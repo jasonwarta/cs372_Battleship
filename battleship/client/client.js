@@ -1,6 +1,6 @@
 
 var shiparray = ['carrier', 'submarine', 'destroyer', 'cruiser', 'battleship']; 
-
+var subscribed = false;
 
 Template.titlebar.onRendered( function(){
   
@@ -8,17 +8,19 @@ Template.titlebar.onRendered( function(){
 
 Template.titlebar.helpers({
   'connected': function(){
-    if(Session.get('connected') != "true") return false;
-    else return true;
+    if(Session.get('connected') == "true") return true;
+    else return false;
   },
   'enemy': function(){
     // console.log(Session.get('enemyId'));
     // Meteor.users.findOne()
-    var email = Meteor.call('getEmailFromID',Session.get('enemyId'))
-    return email;
+    return Session;
   },
   'mouseStats':function(){
     return Session.get('mouseStats');
+  },
+  'userId':function(){
+    return Meteor.userId();
   }
 
 });
@@ -26,26 +28,22 @@ Template.titlebar.helpers({
 Template.titlebar.events({
   'submit form': function(event){
     event.preventDefault();
-    var email = event.target.enemyEmail.value;
+    
+    var enemyID = event.target.enemy.value;
 
-    var userId = Meteor.userId();
-    var userEmail = Meteor.call('getEmailFromID',userId);
-    var enemyId = Meteor.call('getIDFromEmail',email);
-    var enemyEmail = Meteor.call('getEmailFromID',enemyId);
-
-    console.log("userId: "+userId+" email: "+userEmail);
-    console.log("enemyId: "+enemyId+" email: "+enemyEmail);
-
-    if(enemyId){
-      if(userId == enemyId){
-        Session.set('connected',"false");
-      } else if(enemyId == ""){
-        Session.set('connected',"false");
+    Meteor.call('verifyID',enemyID,function(error,result){
+      if(error){
+        console.log(error);
       } else {
-        Session.set('enemyId',enemyId);
-        Session.set('connected',"true");
+        if(result){
+          Session.set('connected','true');
+          Session.set('enemy',enemyID);
+          Meteor.subscribe("enemyCells",enemyID);
+        } else {
+          console.log("invalid id");
+        }
       }
-    }
+    });
   },
 });
 
@@ -53,13 +51,13 @@ Template.titlebar.events({
 $(window).on("load resize scroll", function(){
 
   //Loop through ship array to put ships in correct location
-  ShipArray.find(); 
+  shiparray.find(); 
   givenElementReturnProperShipPlacement(); 
 }); 
 
 Template.game.onRendered( function(){
  
-  Meteor.call('initCellArray');
+  Meteor.call('initCellArray',Meteor.userId());
   var elems = document.getElementsByClassName('rotate');
   elems[0].focus();
   //session var to track state of rotation
@@ -69,7 +67,7 @@ Template.game.onRendered( function(){
   Session.set('gameMode','init'); // 'init','placing','waiting','shooting','done'
   Session.set('selectedShip', 'none'); //'carrier', etc
   // console.log("userId: " + Meteor.call('findUser',"test2@test.com"));
-  Session.set('enemyId','');
+  Session.set('enemyEmail','');
   Session.set('connected',false);
 
 });
@@ -85,10 +83,12 @@ Template.game.helpers({
     }
   },
   'friendlyCell': function(){
-    return FriendlyCellArray.find();
+    var uId = Meteor.userId();
+    return CellArray.find({createdBy:uId});
   },
   'enemyCell': function(){
-    return EnemyCellArray.find();
+    var uId = Meteor.userId();
+    return CellArray.find({createdBy:{'$ne': uId} });
   },
   'mouseover': function(){
     var cellId = this._id;
@@ -117,7 +117,7 @@ Template.game.helpers({
         $(shipString).css({
           visibility: "hidden"
         });
-        Meteor.call('placeShip',posX,posY,rotation,shipLength);
+        Meteor.call('placeShip',Meteor.userId(),posX,posY,rotation,shipLength);
         Session.set('selectedShip',null);
       }
 
@@ -214,7 +214,7 @@ Template.game.helpers({
 
 Template.game.events({
   'click .resetGrid': function() {
-    Meteor.call('initCellArray');
+    Meteor.call('initCellArray',Meteor.userId());
   },
 
   'click .friendly': function(elem) {
@@ -369,3 +369,7 @@ Template.game.events({
      }
   }
 });
+
+
+
+Meteor.subscribe('friendlyCells',Meteor.userId());

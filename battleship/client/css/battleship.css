@@ -249,9 +249,19 @@ body {
 }
 
 .hit {
-	background-color: red !important;
+	width: 30px;
+  height: 30px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  background: red;
 }
 
 .miss {
-	background-color: grey !important;
+	width: 30px;
+  height: 30px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  background: white;
 }
