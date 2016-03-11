@@ -11,6 +11,10 @@ Meteor.startup(function () {
 //   return EnemyCellArray.find();
 // });
 
+Meteor.publish("shipArray", function () {
+    return ShipArray.find();
+});
+
 //Meteor Methods
 Meteor.methods({
 
@@ -158,10 +162,7 @@ Meteor.methods({
     ShipArray.remove({}); 
   },
   'getShip': function(shipname){
-    if(ShipArray.find().count() != "0"){
-      console.log("in meteor method: " + ShipArray.find({ship_name: shipname}).fetch()); 
-      return ShipArray.find({ship_name: shipname}).fetch(); 
-    }
+      return ShipArray.find(); 
   }
 });
 
