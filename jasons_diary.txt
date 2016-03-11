@@ -146,6 +146,17 @@ matching, sessions and session tracking, and turns.
 2016.03.10 Thursday
 6 hours. Worked on ways to display friendly and enemy hits on the board.  I 
 keep running up against difficulties abstracting code as necessary to display
-shots for both players.
+shots for both players.  Decided to track all cell states within one Collection.
+This is "insecure" because someone with minimal knowledge of the platform could
+use the JS console to spy on their opponent's ship locations but this is the 
+best way to implement the game given the time frame.  Redesigned the ship 
+placing and displaying functions to not check for out of bounds ships, and only
+register "ship" cells in CellArray when the user confirms they are done placing
+their ships. 
+
+2016.03.11 Friday
+3 hours.  Finished implementing ship placement and shot tracking.  There is no 
+turn or status tracking between players, but ships, shots, and misses appear 
+where they should.
 
 

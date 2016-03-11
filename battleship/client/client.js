@@ -1,4 +1,4 @@
-Meteor.subscribe("shipArray"); 
+// Meteor.subscribe("shipArray"); 
 
 //When the window is resized call function.
 Meteor.startup(function() {
@@ -19,7 +19,7 @@ Template.titlebar.helpers({
   'enemy': function(){
     // console.log(Session.get('enemyId'));
     // Meteor.users.findOne()
-    return Session;
+    return Session.get('enemy');
   },
   'mouseStats':function(){
     return Session.get('mouseStats');
@@ -74,36 +74,38 @@ function placeShipImages(rotation,shipLength,shipX,shipY, cell_coll, cell_roww){
       }); 
     }
 
-    if(ShipArray.find({ qty: {ship_name: ship}}).fetch().ship_name == ship){
-      //if ship is already in the ship array, don't add it
-      console.log("ship already in array"); 
-      //change orientation/update feature j-i-c
-      //update cells placed
-    }
-    else{
-      //put the ship in the collection
-      ShipArray.insert({
-            ship_name: ship,
-            x_value : shipX,
-            y_value : shipY,
-            image : ship + "_img",
-            image_source : "battleship_sprites_empty.png",
-            rotation: rotation,
-            ship_length : shipLength,
-            placed : true,
-            html_element : document.getElementById(ship + "_img").id,
-            board_element : 'leftboard',
-            cell_col: cell_coll,
-            cell_row: cell_roww
-          }); 
-    }
+    Meteor.call('positionShip',ship,shipX,shipY,rotation,shipLength,cell_coll,cell_roww);
+
+    // if(ShipArray.find({ qty: {ship_name: ship}}).fetch().ship_name == ship){
+    //   //if ship is already in the ship array, don't add it
+    //   console.log("ship already in array"); 
+    //   //change orientation/update feature j-i-c
+    //   //update cells placed
+    // }
+    // else{
+    //   //put the ship in the collection
+    //   ShipArray.insert({
+    //         ship_name: ship,
+    //         x_value : shipX,
+    //         y_value : shipY,
+    //         image : ship + "_img",
+    //         image_source : "battleship_sprites_empty.png",
+    //         rotation: rotation,
+    //         ship_length : shipLength,
+    //         placed : true,
+    //         html_element : document.getElementById(ship + "_img").id,
+    //         board_element : 'leftboard',
+    //         cell_col: cell_coll,
+    //         cell_row: cell_roww
+    //       }); 
+    // }
 }
 
 Template.game.onRendered( function(){
  
   Meteor.call('removeAllShips'); 
   Meteor.call('initCellArray',Meteor.userId());
-  
+
   var elems = document.getElementsByClassName('rotate');
   elems[0].focus();
   //session var to track state of rotation
@@ -166,7 +168,7 @@ Template.game.helpers({
         $(shipString).css({
           visibility: "hidden"
         });
-        Meteor.call('placeShip',Meteor.userId(),posX,posY,rotation,shipLength);
+        // Meteor.call('placeShip',Meteor.userId(),posX,posY,rotation,shipLength);
         Session.set('selectedShip',null);
       }
 
@@ -313,12 +315,13 @@ Template.game.events({
         var X = cell.left + (cell.height*shipLength - shipImg.width)/2; 
       }
       
-      Meteor.call('placeShip',
-        Session.get('posX'),
-        Session.get('posY'),
-        Session.get('rotation'),
-        shipLength
-      );
+      // Meteor.call('placeShip',
+      //   Meteor.userId(),
+      //   Session.get('posX'),
+      //   Session.get('posY'),
+      //   Session.get('rotation'),
+      //   shipLength
+      // );
 
       //Place ship images on client side
       placeShipImages(Session.get('rotation'),shipLength,X,Y,this.col,this.row); 
@@ -328,6 +331,8 @@ Template.game.events({
   'click .enemy': function(e){
     if(Session.get('gameMode')=="shooting"){
       Meteor.call('shoot',
+        // Meteor.userId(),
+        Session.get('enemy'),
         Session.get('posX'),
         Session.get('posY')
       );
@@ -361,6 +366,54 @@ Template.game.events({
     // else Session.set('rotation','vertical');
   },
 
+  'click .done': function(){
+    Session.set('gameMode','shooting');
+
+    var carrier = ShipArray.findOne({ship_name:"carrier"});
+    var battleship = ShipArray.findOne({ship_name:"battleship"});
+    var cruiser = ShipArray.findOne({ship_name:"cruiser"});
+    var submarine = ShipArray.findOne({ship_name:"submarine"});
+    var destroyer = ShipArray.findOne({ship_name:"destroyer"});
+
+    Meteor.call('placeShip',
+      Meteor.userId(),
+      carrier.cell_row,
+      carrier.cell_col,
+      carrier.rotation,
+      carrier.ship_length);
+
+    Meteor.call('placeShip',
+      Meteor.userId(),
+      battleship.cell_row,
+      battleship.cell_col,
+      battleship.rotation,
+      battleship.ship_length);
+
+    Meteor.call('placeShip',
+      Meteor.userId(),
+      cruiser.cell_row,
+      cruiser.cell_col,
+      cruiser.rotation,
+      cruiser.ship_length);
+
+    Meteor.call('placeShip',
+      Meteor.userId(),
+      submarine.cell_row,
+      submarine.cell_col,
+      submarine.rotation,
+      submarine.ship_length);
+
+    Meteor.call('placeShip',
+      Meteor.userId(),
+      destroyer.cell_row,
+      destroyer.cell_col,
+      destroyer.rotation,
+      destroyer.ship_length);
+
+    Session.set('selectedShip',"none");
+    Session.set('rotation',"none");
+  },
+
   'keyup': function(event) {
     if(event.which == 82){
       var state = Session.get('rotation');
@@ -372,7 +425,7 @@ Template.game.events({
   },
 
   //mouseover handlers for friendly cells
-  'mouseenter .friendly': function(e) {
+  'mouseenter .cell': function(e) {
 
     var cellId = this._id;
     Session.set('mouseState','enter');
@@ -391,7 +444,7 @@ Template.game.events({
     // if(Session.get('gameMode') == "")
   },
 
-  'mouseleave .friendly': function() {
+  'mouseleave .cell': function() {
     var cellId = this._id;
     Session.set('mouseState','leave');
     Session.set('leaveCell',cellId);
@@ -421,3 +474,5 @@ Template.game.events({
 
 
 Meteor.subscribe('friendlyCells',Meteor.userId());
+
+Meteor.subscribe('shipArray');
