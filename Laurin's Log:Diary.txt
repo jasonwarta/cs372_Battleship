@@ -41,4 +41,7 @@ Didn't work on battleship over the weekend, but I did push through other assignm
 3-7-16
 Finished the User Guide! Whoo! That should be the last of all the documentation. 
 
+3-10-16
+Tried to fix the fix images when the window was resized. I got considerably closer but not implemented. *sigh* I wish we could have actually finished, but we did do considerably well when you think of the learning curve we had to overcome. We had to learn 3 "languages", one framework, and the testing framework for that framework. Pretty good overall. We just needed to perfect the grid and the remote-connection. Jason said he could take a whole semester to learn Meteor, looking at it, that doesn't seem too bad. It was definetely fairly easy to start out with having never done databasing before, and it has lots of functionality and packages.
+
 
