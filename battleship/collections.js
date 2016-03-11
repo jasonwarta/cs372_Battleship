@@ -19,3 +19,5 @@ CellArray = new Mongo.Collection('cells');
 //   col: num, 0-9
 //   state: string, "empty","ship"
 // }
+
+ShipArray = new Mongo.Collection('shipArray');

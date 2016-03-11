@@ -1,3 +1,4 @@
+
 Meteor.startup(function () {
 
 });
@@ -9,6 +10,10 @@ Meteor.startup(function () {
 // Meteor.publish('enemyCells', function(){
 //   return EnemyCellArray.find();
 // });
+
+Meteor.publish("shipArray", function () {
+    return ShipArray.find();
+});
 
 //Meteor Methods
 Meteor.methods({
@@ -71,11 +76,10 @@ Meteor.methods({
     // }
   },
 
-  'placeShip': function(userId,posX,posY,rotation,shipLength){
 
+  'placeShip': function(posX,posY,rotation,shipLength){
     if(Meteor.call('checkShipPosition',posX,posY,rotation,shipLength) == "valid position"){
-
-      if (rotation == "horizontal") {
+       if (rotation == "horizontal") {
         
         CellArray.update(
           { '$and': [ 
@@ -93,16 +97,8 @@ Meteor.methods({
           }, 
             function(error){
               if(error) console.log(error);
-            } );
-
-        // PlayerAction.insert({
-        //    row: posX,
-        //    col: posY,
-        //    action: "ship",
-        //    rotation: rotation,
-        //    shipLength: shipLength,
-        //    userId: Meteor.userId()
-        // });
+            } 
+        );
 
       } else if (rotation == "vertical") {
         
@@ -122,18 +118,9 @@ Meteor.methods({
             function(error){
               if(error) console.log(error);
             } );
-
-        // PlayerAction.insert({
-        //    row: posX,
-        //    col: posY,
-        //    action: "ship",
-        //    rotation: rotation,
-        //    shipLength: shipLength,
-        //    userId: this.userId(),
-        // });
-
-      }
-    } else {
+      } 
+    }
+    else {
       console.log("invalid position");
     }
   },
@@ -188,14 +175,18 @@ Meteor.methods({
     console.log("Invalid ID: " + id)
     return false;
   },
-
-});
-
-
-Meteor.publish("enemyCells", function(enemyId){
-  return CellArray.find({createdBy:enemyId});
+  'removeAllShips': function(){
+    ShipArray.remove({}); 
+  },
+  'getShip': function(shipname){
+      return ShipArray.find(); 
+  }
 });
 
 Meteor.publish("friendlyCells",function(userId){
   return CellArray.find({createdBy:userId});
 });
+
+Meteor.publish("enemyCells", function(enemyId){
+  return CellArray.find({createdBy:enemyId});
+)};
